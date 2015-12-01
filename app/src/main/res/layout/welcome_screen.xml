@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_margin="0px"
+    android:padding="0px">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/imgWelcomeLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/welcome_logo"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"/>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <ImageView
+                    android:id="@+id/imgWelcomeTextBg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/welcome_text_bg"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true" />
+
+                <TextView
+                    android:id="@+id/txtWelcome"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/welcome_header"
+                    android:typeface="sans"
+                    android:textSize="35sp"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtWelcome2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/welcome_text"
+                    android:typeface="sans"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:padding="25px">
+
+                <Button
+                    android:id="@+id/butLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonbackground"
+                    android:textColor="#ffffff"
+                    android:onClick="doLogin"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10px"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/login" />
+
+                <Button
+                    android:id="@+id/butSignup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonbackground"
+                    android:textColor="#ffffff"
+                    android:onClick="doSignUp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10px"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/signup" />
+
+                <Button
+                    android:id="@+id/butReadMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonbackground"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10px"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/learnmore" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
