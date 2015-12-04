@@ -15,8 +15,6 @@ import com.studshare.mobile.studshare.other.CustomList;
 
 public class ProfileScreenActivity extends AppCompatActivity {
 
-    //String[] listItems = { "Zmień hasło", "Wyloguj" };
-
     ListView list;
     String[] web = {
             "Zmień hasło",
@@ -32,28 +30,14 @@ public class ProfileScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.profile_screen);
 
-        /*
-        ListView list=(ListView)findViewById(android.R.id.list);
-
-        list.setAdapter(new ArrayAdapter<String>(
-                this,R.layout.list_black_text,R.id.list_content, listItems));
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                switch(arg2) {
-                    case 1:
-                        doLogOut(arg1);
-                }
-
-            }
-        });*/
-
         CustomList adapter = new CustomList(ProfileScreenActivity.this, web, imageId);
+
         list = (ListView)findViewById(android.R.id.list);
         list.setAdapter(adapter);
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -65,7 +49,6 @@ public class ProfileScreenActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void goToMainScreen(View view) {
@@ -76,7 +59,11 @@ public class ProfileScreenActivity extends AppCompatActivity {
     public void doLogOut(View view) {
         boolean deleteSuccessfull = profileManager.deleteProfile(getApplicationContext());
 
-        Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(goToNextActivity);
+        if (deleteSuccessfull)
+        {
+            Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(goToNextActivity);
+        }
+
     }
 }
