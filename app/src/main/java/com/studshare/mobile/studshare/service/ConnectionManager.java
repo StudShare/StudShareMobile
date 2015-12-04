@@ -1,4 +1,4 @@
-package com.studshare.mobile.studshare;
+package com.studshare.mobile.studshare.service;
 
 import android.annotation.SuppressLint;
 import android.os.StrictMode;

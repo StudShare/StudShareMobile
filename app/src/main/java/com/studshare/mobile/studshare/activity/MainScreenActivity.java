@@ -1,9 +1,12 @@
-package com.studshare.mobile.studshare;
+package com.studshare.mobile.studshare.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.studshare.mobile.studshare.R;
+import com.studshare.mobile.studshare.service.ProfileManager;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -16,10 +19,8 @@ public class MainScreenActivity extends AppCompatActivity {
         setContentView(R.layout.main_screen);
     }
 
-    public void doLogOut(View view) {
-        boolean deleteSuccessfull = profileManager.deleteProfile(getApplicationContext());
-
-        Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
+    public void goToProfileSettings(View view) {
+        Intent goToNextActivity = new Intent(getApplicationContext(), ProfileScreenActivity.class);
         startActivity(goToNextActivity);
     }
 }

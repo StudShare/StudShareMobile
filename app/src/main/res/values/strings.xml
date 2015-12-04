@@ -1,4 +1,7 @@
 <resources>
+    <color name="primaryBlue">#00bcd4</color>
+    <color name="accentLightBlue">#70c6d1</color>
+    <color name="secondaryBlue">#03545e</color>
     <string name="app_name">StudShare</string>
     <string name="action_settings">Settings</string>
     <string name="welcome_header">Witaj!</string>

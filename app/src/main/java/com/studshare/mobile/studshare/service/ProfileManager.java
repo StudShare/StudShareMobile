@@ -1,7 +1,6 @@
-package com.studshare.mobile.studshare;
+package com.studshare.mobile.studshare.service;
 
 import android.content.Context;
-import android.content.Intent;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,8 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class ProfileManager
 {

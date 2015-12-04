@@ -1,4 +1,4 @@
-package com.studshare.mobile.studshare;
+package com.studshare.mobile.studshare.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.studshare.mobile.studshare.R;
+import com.studshare.mobile.studshare.service.ProfileManager;
 
 public class SignupScreenActivity extends AppCompatActivity {
 
@@ -49,9 +52,13 @@ public class SignupScreenActivity extends AppCompatActivity {
             return;
         }
 
-        if (!email.contains("@")){
-            Toast.makeText(getApplicationContext(), "Niepoprawny adres e-mail", Toast.LENGTH_SHORT).show();
-            return;
+        else{
+            boolean emailIsValid = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+
+            if (!emailIsValid) {
+                Toast.makeText(getApplicationContext(), "Niepoprawny adres e-mail", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         boolean signupSuccessfully = profileManager.trySignup(getApplicationContext(), login.trim(), pass.trim(), email.trim());

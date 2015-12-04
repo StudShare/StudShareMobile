@@ -1,20 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Znaleziono profil"
-        android:id="@+id/textView" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="WYLOGUJ"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="doLogOut" />
+        <LinearLayout
+            android:id="@+id/stupid_android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primaryBlue">
+
+            <EditText
+                android:id="@+id/txtSearch"
+                android:textColor="#03545e"
+                android:textStyle="bold"
+                android:textColorHint="#70c6d1"
+                android:background="@drawable/edittextstyle"
+                android:padding="10dp"
+                android:hint="SZUKAJ"
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="6" />
+
+            <LinearLayout
+                android:id="@+id/s"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/primaryBlue"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/butSearch"
+                    android:padding="10dp"
+                    android:background="@null"
+                    android:src="@drawable/search"
+                    android:minWidth="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/s2"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/primaryBlue"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/butProfile"
+                    android:padding="10dp"
+                    android:background="@null"
+                    android:src="@drawable/account"
+                    android:minWidth="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="goToProfileSettings" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 </LinearLayout>
