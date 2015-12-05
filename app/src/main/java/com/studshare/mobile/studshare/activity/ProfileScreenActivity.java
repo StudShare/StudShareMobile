@@ -1,5 +1,7 @@
 package com.studshare.mobile.studshare.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -57,13 +59,27 @@ public class ProfileScreenActivity extends AppCompatActivity {
     }
 
     public void doLogOut(View view) {
-        boolean deleteSuccessfull = profileManager.deleteProfile(getApplicationContext());
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        boolean deleteSuccessfull = profileManager.deleteProfile(getApplicationContext());
 
-        if (deleteSuccessfull)
-        {
-            Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(goToNextActivity);
-        }
+                        if (deleteSuccessfull)
+                        {
+                            Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(goToNextActivity);
+                        }
+                        break;
 
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setMessage("Czy na pewno chcesz się wylogować?").setPositiveButton("Tak", dialogClickListener).setNegativeButton("Nie", dialogClickListener).show();
     }
 }
