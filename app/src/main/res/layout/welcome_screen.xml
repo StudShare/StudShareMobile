@@ -40,28 +40,13 @@
 
                 <TextView
                     android:id="@+id/txtWelcome"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="0dp"
                     android:text="@string/welcome_header"
-                    android:typeface="sans"
-                    android:textSize="35sp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    style="@style/SectionHeader" />
 
                 <TextView
                     android:id="@+id/txtWelcome2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="48dp"
                     android:text="@string/welcome_text"
-                    android:typeface="sans"
-                    android:textSize="16sp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    style="@style/SectionDescription"/>
 
             </RelativeLayout>
 
@@ -75,41 +60,23 @@
 
                 <Button
                     android:id="@+id/butLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/buttonbackground"
-                    android:textColor="#ffffff"
                     android:onClick="doLogin"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:padding="10px"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/login" />
+                    android:text="@string/login"
+                    style="@style/NonImageButton"/>
 
                 <Button
                     android:id="@+id/butSignup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/buttonbackground"
-                    android:textColor="#ffffff"
                     android:onClick="doSignUp"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:padding="10px"
                     android:layout_marginTop="20dp"
-                    android:text="@string/signup" />
+                    android:text="@string/signup"
+                    style="@style/NonImageButton"/>
 
                 <Button
                     android:id="@+id/butReadMore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/buttonbackground"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:padding="10px"
                     android:layout_marginTop="20dp"
-                    android:text="@string/learnmore" />
+                    android:text="@string/learnmore"
+                    style="@style/NonImageButton"/>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

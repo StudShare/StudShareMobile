@@ -32,113 +32,45 @@
 
                 <TextView
                     android:id="@+id/txtSignupInfo"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="0dp"
                     android:text="@string/signup_header"
-                    android:typeface="sans"
-                    android:textSize="35sp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    style="@style/SectionHeader" />
 
                 <TextView
                     android:id="@+id/txtSignupInfo2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="48dp"
                     android:text="@string/signup_text"
-                    android:typeface="sans"
-                    android:textSize="16sp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    style="@style/SectionDescription" />
 
             </RelativeLayout>
 
             <EditText
                 android:id="@+id/txtLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="#03545e"
-                android:textStyle="bold"
-                android:textColorHint="#70c6d1"
-                android:background="@drawable/edittextstyle"
-                android:padding="10dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
                 android:hint="@string/login_login_hint"
-                android:layout_margin="25dp"
-                android:textSize="20sp"
-                android:singleLine="true" />
+                style="@style/TextBox" />
 
             <EditText
                 android:id="@+id/txtPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="#03545e"
-                android:textStyle="bold"
-                android:textColorHint="#70c6d1"
-                android:background="@drawable/edittextstyle"
-                android:padding="10dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
                 android:hint="@string/login_password_hint"
-                android:layout_margin="25dp"
-                android:textSize="20sp"
                 android:inputType="textPassword"
-                android:singleLine="true" />
+                style="@style/TextBox" />
 
             <EditText
                 android:id="@+id/txtPasswordRepeat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="#03545e"
-                android:textStyle="bold"
-                android:textColorHint="#70c6d1"
-                android:background="@drawable/edittextstyle"
-                android:padding="10dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
                 android:hint="@string/signup_passwordrepeat_hint"
-                android:layout_margin="25dp"
-                android:textSize="20sp"
                 android:inputType="textPassword"
-                android:singleLine="true" />
+                style="@style/TextBox" />
 
             <EditText
                 android:id="@+id/txtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="#03545e"
-                android:textStyle="bold"
-                android:textColorHint="#70c6d1"
-                android:background="@drawable/edittextstyle"
-                android:padding="10dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
                 android:hint="@string/signup_email_hint"
-                android:layout_margin="25dp"
-                android:textSize="20sp"
-                android:singleLine="true" />
+                style="@style/TextBox" />
 
             <Button
                 android:id="@+id/butSignup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buttonbackground"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:padding="10dp"
                 android:onClick="trySignup"
                 android:layout_margin="25dp"
-                android:text="@string/signup" />
+                android:text="@string/signup"
+                style="@style/NonImageButton"/>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
