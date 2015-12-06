@@ -12,9 +12,12 @@ import java.sql.SQLException;
 public class ProfileManager
 {
     private String FILENAME = "profile";
-    private String Login;
-    private String Password;
+    private static String Login;
+    private static String Password;
     private ConnectionManager connectionManager = new ConnectionManager();
+
+    public String getLogin() { return Login; }
+    public void setPassword(String newPassword) { Password = newPassword; }
 
     public String loadProfile(Context context)
     {
@@ -56,6 +59,9 @@ public class ProfileManager
             FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fos.write(data.getBytes());
             fos.close();
+
+            Login = login;
+            Password = password;
 
             savedSuccessfully = true;
 
@@ -137,6 +143,33 @@ public class ProfileManager
         catch (SQLException e)
         {
             return false;
+        }
+    }
+
+    public boolean changePassword(Context context, String newPassword){
+        //1. Zmiana na serwerze
+        //2. Zmiana w profilu
+        //3. Zmiana pol w profilemanagerze
+
+        boolean passwordChanged = false;
+
+        String query = "UPDATE users SET password='" + newPassword + "' WHERE login='" + getLogin() + "'";
+        int result = connectionManager.SendUpdate(query);
+
+        if (result == 1){
+            passwordChanged = true;
+
+            //2. Zmiana profilu
+            deleteProfile(context);
+            saveProfile(context, getLogin(), newPassword);
+
+            //3. Zmiana pol w profileManager
+            setPassword(newPassword);
+
+            return passwordChanged;
+        }
+        else{
+            return passwordChanged;
         }
     }
 }

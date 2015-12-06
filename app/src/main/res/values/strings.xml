@@ -18,4 +18,9 @@
     <string name="signup_passwordrepeat_hint">POWTÓRZ HASŁO</string>
     <string name="signup_email_hint">ADRES EMAIL</string>
     <string name="profile_settings_text">Profil</string>
+    <string name="profile_passwordchange_text">Zmiana hasła</string>
+    <string name="profile_passwordchange_actualpassword">AKTUALNE HASŁO</string>
+    <string name="profile_passwordchange_newpassword">NOWE HASŁO</string>
+    <string name="profile_passwordchange_newpasswordrepeat">POWTÓRZ NOWE HASŁO</string>
+    <string name="profile_passwordchange_changepassword">ZMIEŃ HASŁO</string>
 </resources>

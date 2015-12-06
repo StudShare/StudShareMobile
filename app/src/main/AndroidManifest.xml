@@ -30,7 +30,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.ProfileScreenActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity android:name=".activity.PasswordChangeScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

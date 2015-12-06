@@ -44,9 +44,12 @@ public class ProfileScreenActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch(position) {
-                    case 1:
-                        doLogOut(view);
+                if (id == 0){
+                    Intent goToNextActivity = new Intent(view.getContext(), PasswordChangeScreenActivity.class);
+                    startActivity(goToNextActivity);
+                }
+                else {
+                    doLogOut(view);
                 }
 
             }
