@@ -20,10 +20,12 @@ public class ProfileScreenActivity extends AppCompatActivity {
     ListView list;
     String[] web = {
             "Zmień hasło",
+            "Zmień e-mail",
             "Wyloguj"
     } ;
     Integer[] imageId = {
             R.drawable.password,
+            R.drawable.email,
             R.drawable.logout
     };
 
@@ -48,7 +50,7 @@ public class ProfileScreenActivity extends AppCompatActivity {
                     Intent goToNextActivity = new Intent(view.getContext(), PasswordChangeScreenActivity.class);
                     startActivity(goToNextActivity);
                 }
-                else {
+                else if (id == 2) {
                     doLogOut(view);
                 }
 
