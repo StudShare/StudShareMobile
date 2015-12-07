@@ -51,9 +51,6 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
             return;
         }
 
-        String query = "SELECT * FROM users WHERE login='" + profileManager.getLogin() + "' AND password='" + actualPassword + "'";
-        ResultSet rs = connectionManager.SendQuery(query);
-
         String temppass = profileManager.getPassword();
 
         profileManager.setPassword(actualPassword);
