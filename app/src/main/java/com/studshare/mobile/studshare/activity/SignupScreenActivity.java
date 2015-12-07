@@ -36,7 +36,6 @@ public class SignupScreenActivity extends AppCompatActivity {
 
     public void trySignup(View view)
     {
-        //najpierw sprawdzic poprawnosc pol, potem wywolac funkcje z profile manager
         String login = txtLogin.getText().toString();
         String pass = txtPassword.getText().toString();
         String passr = txtPasswordRepeat.getText().toString();

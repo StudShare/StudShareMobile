@@ -11,12 +11,15 @@ import java.sql.SQLException;
 
 public class ProfileManager
 {
+    private final String UsersTableName = "SiteUser";
     private String FILENAME = "profile";
     private static String Login;
     private static String Password;
     private ConnectionManager connectionManager = new ConnectionManager();
+    private PasswordMatcher passwordMatcher = new PasswordMatcher();
 
     public String getLogin() { return Login; }
+    public void setLogin(String login) { Login = login; }
     public void setPassword(String newPassword) { Password = newPassword; }
 
     public String loadProfile(Context context)
@@ -91,15 +94,35 @@ public class ProfileManager
 
     public boolean tryLogin()
     {
-        try{
-            String query = "SELECT * FROM users WHERE login='" + Login + "' AND password='" + Password + "'";
-            ResultSet rs = connectionManager.SendQuery(query);
+        try {
+            String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
+            ResultSet rsSalt = connectionManager.SendQuery(getSalt);
+            String salt = "";
 
-            if (rs.next()){
-                return true;
+            if (rsSalt.next()){
+                salt = rsSalt.getString(1);
+                String hash = passwordMatcher.getSecurePassword(Password.trim(), salt);
+
+                String checkPassword = "SELECT hash FROM " + UsersTableName + " WHERE login='" + Login + "'";
+                ResultSet rsHash = connectionManager.SendQuery(checkPassword);
+
+                if (rsHash.next()){
+                    String downloadedHash = rsHash.getString(1);
+
+                    if (downloadedHash.equals(hash)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
             }
-
-            return false;
+            else {
+                return false;
+            }
         }
         catch (SQLException e)
         {
@@ -110,7 +133,7 @@ public class ProfileManager
     public boolean trySignup(Context context, String login, String password, String email)
     {
         try{
-            String query = "SELECT * FROM users WHERE login='" + login + "' OR email='" + email + "'";
+            String query = "SELECT * FROM " + UsersTableName + " WHERE login='" + login + "' OR email='" + email + "'";
             ResultSet rs = connectionManager.SendQuery(query);
 
             if (rs.next()){
@@ -118,26 +141,36 @@ public class ProfileManager
             }
             else{   //mozna utworzyc konto
 
-                query = "INSERT INTO users(login, password, email) VALUES('" + login + "', '" + password + "', '" + email + "')";
-                //rs = connectionManager.SendQuery(query);
-                int result = connectionManager.SendUpdate(query);
+                try {
+                    String salt = passwordMatcher.generateSalt();
+                    String hash = passwordMatcher.getSecurePassword(password, salt);
 
-                if (result == 1) {
-                    boolean savedSuccessfully = saveProfile(context, login, password);
+                    query = "INSERT INTO " + UsersTableName + "(login, salt, hash, email) VALUES('" + login + "', '" + salt + "', '" + hash + "', '" + email + "')";
+                    int result = connectionManager.SendUpdate(query);
 
-                    if (savedSuccessfully){
-                        Login = login;
-                        Password = password;
+                    if (result == 1) {
+                        boolean savedSuccessfully = saveProfile(context, login, password);
 
-                        return true;    //poprawnie utworzono konto i profil
+                        if (savedSuccessfully){
+                            Login = login;
+                            Password = password;
+
+                            return true;    //poprawnie utworzono konto i profil
+                        }
+                        else{
+                            return false;
+                        }
                     }
-                    else{
+                    else {
                         return false;
                     }
+
                 }
-                else {
+                catch (Exception e){
                     return false;
                 }
+
+
             }
         }
         catch (SQLException e)

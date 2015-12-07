@@ -44,13 +44,12 @@ public class LoginScreenActivity extends AppCompatActivity {
             return;
         }
 
-        String query = "SELECT * FROM users WHERE login='" + txtLogin.getText() + "' and password='" + txtPassword.getText() + "'";
-
-        ConnectionManager cc = new ConnectionManager();
-        ResultSet rs = cc.SendQuery(query);
+        profileManager.setLogin(login);
+        profileManager.setPassword(pass);
+        boolean loggedSuccessfully = profileManager.tryLogin();
 
         try {
-            if (rs.next()) {
+            if (loggedSuccessfully) {
 
                 boolean savedSuccessfully = profileManager.saveProfile(getApplicationContext(), txtLogin.getText().toString(), txtPassword.getText().toString());
 
