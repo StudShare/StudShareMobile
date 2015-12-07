@@ -23,4 +23,8 @@
     <string name="profile_passwordchange_newpassword">NOWE HASŁO</string>
     <string name="profile_passwordchange_newpasswordrepeat">POWTÓRZ NOWE HASŁO</string>
     <string name="profile_passwordchange_changepassword">ZMIEŃ HASŁO</string>
+    <string name="profile_emailchange_text">Zmiana e-maila</string>
+    <string name="profile_emailchange_newemail">NOWY ADRES E-MAIL</string>
+    <string name="profile_emailchange_newemailrepeat">POWTÓRZ NOWY ADRES E-MAIL</string>
+    <string name="profile_emailchange_changeemail">ZMIEŃ E-MAIL</string>
 </resources>

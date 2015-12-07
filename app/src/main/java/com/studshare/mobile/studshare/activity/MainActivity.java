@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         if (profile == null)
             setContentView(R.layout.welcome_screen);
         else{
-            boolean loggedSuccessfully = profileManager.tryLogin();
+            boolean loggedSuccessfully = profileManager.tryLogin(profileManager.getLogin(), profileManager.getPassword());
 
             if (loggedSuccessfully) {
                 Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);

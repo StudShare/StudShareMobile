@@ -50,6 +50,10 @@ public class ProfileScreenActivity extends AppCompatActivity {
                     Intent goToNextActivity = new Intent(view.getContext(), PasswordChangeScreenActivity.class);
                     startActivity(goToNextActivity);
                 }
+                else if (id == 1) {
+                    Intent goToNextActivity = new Intent(view.getContext(), EmailChangeScreenActivity.class);
+                    startActivity(goToNextActivity);
+                }
                 else if (id == 2) {
                     doLogOut(view);
                 }

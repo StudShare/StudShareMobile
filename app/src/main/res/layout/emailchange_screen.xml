@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondaryBlue">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+
+        <LinearLayout
+            android:id="@+id/navbar"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primaryBlue">
+
+            <ImageButton
+                android:id="@+id/butBack"
+                android:padding="10dp"
+                android:background="@null"
+                android:src="@drawable/backarrow"
+                android:minWidth="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="goToProfileSettings" />
+
+            <TextView
+                android:id="@+id/txtProfileSettingsInfo"
+                android:layout_gravity="center"
+                android:text="@string/profile_emailchange_text"
+                android:layout_marginLeft="24dp"
+                style="@style/SectionHeader" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true">
+
+            <EditText
+                android:id="@+id/txtActualPassword"
+                android:hint="@string/profile_passwordchange_actualpassword"
+                android:inputType="textPassword"
+                style="@style/TextBox" />
+
+            <EditText
+                android:id="@+id/txtNewEmail"
+                android:hint="@string/profile_emailchange_newemail"
+                android:inputType="textEmailAddress"
+                style="@style/TextBox" />
+
+            <EditText
+                android:id="@+id/txtRepeatNewEmail"
+                android:hint="@string/profile_emailchange_newemailrepeat"
+                android:inputType="textEmailAddress"
+                style="@style/TextBox" />
+
+            <Button
+                android:id="@+id/butChangeEmail"
+                android:layout_margin="25dp"
+                android:text="@string/profile_emailchange_changeemail"
+                style="@style/NonImageButton"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

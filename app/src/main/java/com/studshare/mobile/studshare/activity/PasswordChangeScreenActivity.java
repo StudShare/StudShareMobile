@@ -51,11 +51,7 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
             return;
         }
 
-        String temppass = profileManager.getPassword();
-
-        profileManager.setPassword(actualPassword);
-        boolean loggedSuccessfully = profileManager.tryLogin();
-        profileManager.setPassword(temppass);
+        boolean loggedSuccessfully = profileManager.tryLogin(profileManager.getLogin(), actualPassword);
 
         try {
             if (loggedSuccessfully){

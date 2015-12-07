@@ -93,7 +93,7 @@ public class ProfileManager
         }
     }
 
-    public boolean tryLogin()
+    public boolean tryLogin(String Login, String Password)
     {
         try {
             String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
@@ -133,15 +133,14 @@ public class ProfileManager
 
     public boolean trySignup(Context context, String login, String password, String email)
     {
-        try{
+        try {
             String query = "SELECT * FROM " + UsersTableName + " WHERE login='" + login + "' OR email='" + email + "'";
             ResultSet rs = connectionManager.SendQuery(query);
 
-            if (rs.next()){
+            if (rs.next()) {
                 return false;
             }
-            else{   //mozna utworzyc konto
-
+            else {   //mozna utworzyc konto
                 try {
                     String salt = passwordMatcher.generateSalt();
                     String hash = passwordMatcher.getSecurePassword(password, salt);
@@ -152,30 +151,26 @@ public class ProfileManager
                     if (result == 1) {
                         boolean savedSuccessfully = saveProfile(context, login, password);
 
-                        if (savedSuccessfully){
+                        if (savedSuccessfully) {
                             Login = login;
                             Password = password;
 
                             return true;    //poprawnie utworzono konto i profil
                         }
-                        else{
+                        else {
                             return false;
                         }
                     }
                     else {
                         return false;
                     }
-
                 }
-                catch (Exception e){
+                catch (Exception e) {
                     return false;
                 }
-
-
             }
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             return false;
         }
     }
@@ -192,10 +187,10 @@ public class ProfileManager
 
                 hash = passwordMatcher.getSecurePassword(newPassword, salt);
 
-                String query = "UPDATE " + UsersTableName + " SET hash='" + hash + "'";
+                String query = "UPDATE " + UsersTableName + " SET hash='" + hash + "' WHERE login='" + getLogin() + "'";
                 int result = connectionManager.SendUpdate(query);
 
-                if (result == 1){
+                if (result == 1) {
                     deleteProfile(context);
                     saveProfile(context, getLogin(), newPassword);
 
@@ -203,7 +198,7 @@ public class ProfileManager
 
                     return true;
                 }
-                else{
+                else {
                     return false;
                 }
             }

@@ -44,9 +44,7 @@ public class LoginScreenActivity extends AppCompatActivity {
             return;
         }
 
-        profileManager.setLogin(login);
-        profileManager.setPassword(pass);
-        boolean loggedSuccessfully = profileManager.tryLogin();
+        boolean loggedSuccessfully = profileManager.tryLogin(login, pass);
 
         try {
             if (loggedSuccessfully) {
