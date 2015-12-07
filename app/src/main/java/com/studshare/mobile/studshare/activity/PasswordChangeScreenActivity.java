@@ -54,8 +54,14 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
         String query = "SELECT * FROM users WHERE login='" + profileManager.getLogin() + "' AND password='" + actualPassword + "'";
         ResultSet rs = connectionManager.SendQuery(query);
 
+        String temppass = profileManager.getPassword();
+
+        profileManager.setPassword(actualPassword);
+        boolean loggedSuccessfully = profileManager.tryLogin();
+        profileManager.setPassword(temppass);
+
         try {
-            if (rs.next()){
+            if (loggedSuccessfully){
                 //Udalo sie potwierdzic tozsamosc uzytkownika -- login i haslo sie zgadzaja
                 boolean passwordChanged = profileManager.changePassword(getApplicationContext(), newPassword);
 
@@ -72,7 +78,7 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
                 return;
             }
         }
-        catch (SQLException e){
+        catch (Exception e){
             Toast.makeText(getApplicationContext(), "Podane hasło jest nieprawidłowe. Sprawdź, czy podane hasło nie zawiera błędów.", Toast.LENGTH_SHORT).show();
             return;
         }

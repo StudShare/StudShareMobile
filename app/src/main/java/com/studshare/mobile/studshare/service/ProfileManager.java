@@ -21,6 +21,7 @@ public class ProfileManager
     public String getLogin() { return Login; }
     public void setLogin(String login) { Login = login; }
     public void setPassword(String newPassword) { Password = newPassword; }
+    public String getPassword() { return Password; }
 
     public String loadProfile(Context context)
     {
@@ -180,29 +181,38 @@ public class ProfileManager
     }
 
     public boolean changePassword(Context context, String newPassword){
-        //1. Zmiana na serwerze
-        //2. Zmiana w profilu
-        //3. Zmiana pol w profilemanagerze
+        try{
+            String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
+            ResultSet rsSalt = connectionManager.SendQuery(getSalt);
+            String salt = "";
+            String hash = "";
 
-        boolean passwordChanged = false;
+            if (rsSalt.next()) {
+                salt = rsSalt.getString(1);
 
-        String query = "UPDATE users SET password='" + newPassword + "' WHERE login='" + getLogin() + "'";
-        int result = connectionManager.SendUpdate(query);
+                hash = passwordMatcher.getSecurePassword(newPassword, salt);
 
-        if (result == 1){
-            passwordChanged = true;
+                String query = "UPDATE " + UsersTableName + " SET hash='" + hash + "'";
+                int result = connectionManager.SendUpdate(query);
 
-            //2. Zmiana profilu
-            deleteProfile(context);
-            saveProfile(context, getLogin(), newPassword);
+                if (result == 1){
+                    deleteProfile(context);
+                    saveProfile(context, getLogin(), newPassword);
 
-            //3. Zmiana pol w profileManager
-            setPassword(newPassword);
+                    setPassword(newPassword);
 
-            return passwordChanged;
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
         }
-        else{
-            return passwordChanged;
+        catch (SQLException e){
+            return false;
         }
     }
 }
