@@ -2,6 +2,7 @@ package com.studshare.mobile.studshare.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -26,13 +27,13 @@ public class MainActivity extends AppCompatActivity {
         if (profile == null)
             setContentView(R.layout.welcome_screen);
         else {
-            int loginStatus = profileManager.tryLogin(profileManager.getLogin(), profileManager.getPassword());
+            ProfileManager.OperationStatus loginStatus = profileManager.tryLogin(profileManager.getLogin(), profileManager.getPassword());
 
-            if (loginStatus == 1) {
+            if (loginStatus == ProfileManager.OperationStatus.Success) {
                 Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);
                 startActivity(goToNextActivity);
             }
-            else if (loginStatus == -3) {
+            else if (loginStatus == ProfileManager.OperationStatus.NoInternetConnection) {
                 Intent goToNextActivity = new Intent(getApplicationContext(), NoInternetScreenActivity.class);
                 startActivity(goToNextActivity);
             }

@@ -51,11 +51,10 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
             return;
         }
 
-        int loginStatus = profileManager.tryLogin(profileManager.getLogin(), actualPassword);
+        ProfileManager.OperationStatus loginStatus = profileManager.tryLogin(profileManager.getLogin(), actualPassword);
 
         try {
-            if (loginStatus == 1) {
-                //Udalo sie potwierdzic tozsamosc uzytkownika -- login i haslo sie zgadzaja
+            if (loginStatus == ProfileManager.OperationStatus.Success) {
                 boolean passwordChanged = profileManager.changePassword(getApplicationContext(), newPassword);
 
                 if (passwordChanged) {
@@ -66,11 +65,11 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
                     return;
                 }
             }
-            else if (loginStatus == 0 || loginStatus == -1) {
+            else if (loginStatus == ProfileManager.OperationStatus.IncorrectLogin || loginStatus == ProfileManager.OperationStatus.IncorrectPassword) {
                 Toast.makeText(getApplicationContext(), "Podane hasło jest nieprawidłowe. Sprawdź, czy podane hasło nie zawiera błędów.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            else if (loginStatus == -2 || loginStatus == -3) {
+            else if (loginStatus == ProfileManager.OperationStatus.SQLError || loginStatus == ProfileManager.OperationStatus.NoInternetConnection) {
                 Toast.makeText(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe.", Toast.LENGTH_SHORT).show();
                 return;
             }

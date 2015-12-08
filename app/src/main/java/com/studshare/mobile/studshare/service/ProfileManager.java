@@ -23,6 +23,15 @@ public class ProfileManager
     public void setPassword(String newPassword) { Password = newPassword; }
     public String getPassword() { return Password; }
 
+    public enum OperationStatus {
+        Success,
+        IncorrectPassword,
+        IncorrectLogin,
+        IncorrectCreditials,
+        SQLError,
+        NoInternetConnection
+    }
+
     public String loadProfile(Context context)
     {
         try {
@@ -93,43 +102,43 @@ public class ProfileManager
         }
     }
 
-    public int tryLogin(String Login, String Password)
+    public OperationStatus tryLogin(String Login, String Password)
     {
         try {
             String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
             ResultSet rsSalt = connectionManager.SendQuery(getSalt);
             String salt = "";
 
-            if (rsSalt.next()){
+            if (rsSalt.next()) {
                 salt = rsSalt.getString(1);
                 String hash = passwordMatcher.getSecurePassword(Password.trim(), salt);
 
                 String checkPassword = "SELECT hash FROM " + UsersTableName + " WHERE login='" + Login + "'";
                 ResultSet rsHash = connectionManager.SendQuery(checkPassword);
 
-                if (rsHash.next()){
+                if (rsHash.next()) {
                     String downloadedHash = rsHash.getString(1);
 
-                    if (downloadedHash.equals(hash)){
-                        return 1;
+                    if (downloadedHash.equals(hash)) {
+                        return OperationStatus.Success;
                     }
                     else {
-                        return 0;   //hash sie nie zgadza
+                        return OperationStatus.IncorrectPassword;
                     }
                 }
                 else {
-                    return -1;  //podany login nie istnieje
+                    return OperationStatus.IncorrectLogin;
                 }
             }
             else {
-                return -1;  //podany login nie istnieje
+                return OperationStatus.IncorrectLogin;
             }
         }
         catch (SQLException e) {
-            return -2;  //blad SQL
+            return OperationStatus.SQLError;
         }
         catch (NullPointerException e) {
-            return -3; //brak polaczenia z internetem
+            return OperationStatus.NoInternetConnection;
         }
     }
 
