@@ -46,7 +46,7 @@ public class ProfileScreenActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (id == 0){
+                if (id == 0) {
                     Intent goToNextActivity = new Intent(view.getContext(), PasswordChangeScreenActivity.class);
                     startActivity(goToNextActivity);
                 }

@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,9 +29,11 @@ public class ProfileManager
         Success,
         IncorrectPassword,
         IncorrectLogin,
-        IncorrectCreditials,
         SQLError,
-        NoInternetConnection
+        NoInternetConnection,
+        LoginOrEmailInUse,
+        IOError,
+        OtherError
     }
 
     public String loadProfile(Context context)
@@ -142,16 +146,16 @@ public class ProfileManager
         }
     }
 
-    public boolean trySignup(Context context, String login, String password, String email)
+    public OperationStatus trySignup(Context context, String login, String password, String email)
     {
         try {
             String query = "SELECT * FROM " + UsersTableName + " WHERE login='" + login + "' OR email='" + email + "'";
             ResultSet rs = connectionManager.SendQuery(query);
 
             if (rs.next()) {
-                return false;
+                return OperationStatus.LoginOrEmailInUse;
             }
-            else {   //mozna utworzyc konto
+            else {
                 try {
                     String salt = passwordMatcher.generateSalt();
                     String hash = passwordMatcher.getSecurePassword(password, salt);
@@ -166,28 +170,31 @@ public class ProfileManager
                             Login = login;
                             Password = password;
 
-                            return true;    //poprawnie utworzono konto i profil
+                            return OperationStatus.Success;
                         }
                         else {
-                            return false;
+                            return OperationStatus.IOError;
                         }
                     }
                     else {
-                        return false;
+                        return OperationStatus.SQLError;
                     }
                 }
+                catch (NullPointerException e) {
+                    return OperationStatus.NoInternetConnection;
+                }
                 catch (Exception e) {
-                    return false;
+                    return OperationStatus.OtherError;
                 }
             }
         }
         catch (SQLException e) {
-            return false;
+            return OperationStatus.SQLError;
         }
     }
 
-    public boolean changePassword(Context context, String newPassword){
-        try{
+    public OperationStatus changePassword(Context context, String newPassword) {
+        try {
             String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
             ResultSet rsSalt = connectionManager.SendQuery(getSalt);
             String salt = "";
@@ -207,18 +214,18 @@ public class ProfileManager
 
                     setPassword(newPassword);
 
-                    return true;
+                    return OperationStatus.Success;
                 }
                 else {
-                    return false;
+                    return OperationStatus.IncorrectLogin;
                 }
             }
             else {
-                return false;
+                return OperationStatus.IncorrectLogin;
             }
         }
         catch (SQLException e){
-            return false;
+            return OperationStatus.SQLError;
         }
     }
 }

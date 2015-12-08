@@ -2,6 +2,7 @@ package com.studshare.mobile.studshare.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.studshare.mobile.studshare.R;
+import com.studshare.mobile.studshare.other.ShowMessage;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
 public class SignupScreenActivity extends AppCompatActivity {
@@ -41,34 +43,34 @@ public class SignupScreenActivity extends AppCompatActivity {
         String passr = txtPasswordRepeat.getText().toString();
         String email = txtEmail.getText().toString();
 
-        if (login.trim().equals("") || pass.trim().equals("") || passr.trim().equals("") || email.trim().equals("")){
-            Toast.makeText(getApplicationContext(), "Proszę uzupełnić wszystkie pola", Toast.LENGTH_SHORT).show();
+        if (login.trim().equals("") || pass.trim().equals("") || passr.trim().equals("") || email.trim().equals("")) {
+            ShowMessage.Show(getApplicationContext(), "Proszę uzupełnić wszystkie pola");
             return;
         }
 
-        if (!pass.trim().equals(passr.trim())){
-            Toast.makeText(getApplicationContext(), "Podane hasła nie są jednakowe", Toast.LENGTH_SHORT).show();
+        if (!pass.trim().equals(passr.trim())) {
+            ShowMessage.Show(getApplicationContext(), "Podane hasła nie są jednakowe");
             return;
         }
 
-        else{
-            boolean emailIsValid = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-
-            if (!emailIsValid) {
-                Toast.makeText(getApplicationContext(), "Niepoprawny adres e-mail", Toast.LENGTH_SHORT).show();
+        else {
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                ShowMessage.Show(getApplicationContext(), "Niepoprawny adres e-mail");
                 return;
             }
         }
 
-        boolean signupSuccessfully = profileManager.trySignup(getApplicationContext(), login.trim(), pass.trim(), email.trim());
+        ProfileManager.OperationStatus  signupStatus = profileManager.trySignup(getApplicationContext(), login.trim(), pass.trim(), email.trim());
 
-        if (signupSuccessfully){
+        if (signupStatus == ProfileManager.OperationStatus.Success) {
             Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);
             startActivity(goToNextActivity);
         }
-        else{   //bardzo ogolny komunikat, rownie dobrze moze byc blad polaczenia z serwerem lub nieprawidlowy zapis pliku profilu na urzadzeniu
-            Toast.makeText(getApplicationContext(), "Podany login lub email jest już w użyciu", Toast.LENGTH_SHORT).show();
-            return;
+        else if (signupStatus == ProfileManager.OperationStatus.LoginOrEmailInUse) {
+            ShowMessage.Show(getApplicationContext(), "Podany login lub email jest już w użyciu");
+        }
+        else {
+            ShowMessage.Show(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe.");
         }
     }
 }

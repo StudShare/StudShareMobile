@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.studshare.mobile.studshare.R;
+import com.studshare.mobile.studshare.other.ShowMessage;
 import com.studshare.mobile.studshare.service.ProfileManager;
 import com.studshare.mobile.studshare.service.ConnectionManager;
 
@@ -37,17 +38,17 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
         butChangePassword = (Button) findViewById(R.id.butChangePassword);
     }
 
-    public void tryChangePassword(View view){
+    public void tryChangePassword(View view) {
         String actualPassword = txtPassword.getText().toString();
         String newPassword = txtNewPassword.getText().toString();
         String newPasswordRepeat = txtNewPasswordRepeat.getText().toString();
 
-        if (actualPassword.trim().equals("") || newPassword.trim().equals("") || newPasswordRepeat.trim().equals("")){
-            Toast.makeText(getApplicationContext(), "Proszę uzupełnić wszystkie pola", Toast.LENGTH_SHORT).show();
+        if (actualPassword.trim().equals("") || newPassword.trim().equals("") || newPasswordRepeat.trim().equals("")) {
+            ShowMessage.Show(getApplicationContext(), "Proszę uzupełnić wszystkie pola");
             return;
         }
-        else if (!newPassword.trim().equals(newPasswordRepeat)){
-            Toast.makeText(getApplicationContext(), "Podane hasła nie są takie same!", Toast.LENGTH_SHORT).show();
+        else if (!newPassword.trim().equals(newPasswordRepeat)) {
+            ShowMessage.Show(getApplicationContext(), "Podane hasła nie są takie same");
             return;
         }
 
@@ -55,30 +56,25 @@ public class PasswordChangeScreenActivity extends AppCompatActivity {
 
         try {
             if (loginStatus == ProfileManager.OperationStatus.Success) {
-                boolean passwordChanged = profileManager.changePassword(getApplicationContext(), newPassword);
+                ProfileManager.OperationStatus passwordChangeStatus = profileManager.changePassword(getApplicationContext(), newPassword);
 
-                if (passwordChanged) {
+                if (passwordChangeStatus == ProfileManager.OperationStatus.Success) {
                     goToProfileSettings(view);
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Nie udało się zmienić hasła.", Toast.LENGTH_SHORT).show();
-                    return;
+                    ShowMessage.Show(getApplicationContext(), "Nie udało się zmienić hasła");
                 }
             }
             else if (loginStatus == ProfileManager.OperationStatus.IncorrectLogin || loginStatus == ProfileManager.OperationStatus.IncorrectPassword) {
-                Toast.makeText(getApplicationContext(), "Podane hasło jest nieprawidłowe. Sprawdź, czy podane hasło nie zawiera błędów.", Toast.LENGTH_SHORT).show();
-                return;
+                ShowMessage.Show(getApplicationContext(), "Podane hasło jest nieprawidłowe. Sprawdź, czy podane hasło nie zawiera błędów.");
             }
             else if (loginStatus == ProfileManager.OperationStatus.SQLError || loginStatus == ProfileManager.OperationStatus.NoInternetConnection) {
-                Toast.makeText(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe.", Toast.LENGTH_SHORT).show();
-                return;
+                ShowMessage.Show(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe.");
             }
         }
-        catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Podane hasło jest nieprawidłowe lub nastąpił błąd połączenia z serwerem. Sprawdź połączenie internetowe oraz czy podane hasło nie zawiera błędów.", Toast.LENGTH_SHORT).show();
-            return;
+        catch (Exception e) {
+            ShowMessage.Show(getApplicationContext(), "Podane hasło jest nieprawidłowe lub nastąpił błąd połączenia z serwerem. Sprawdź połączenie internetowe oraz czy podane hasło nie zawiera błędów.");
         }
-
     }
 
     public void goToProfileSettings(View view) {

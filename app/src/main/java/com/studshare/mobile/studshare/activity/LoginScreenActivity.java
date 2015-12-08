@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.studshare.mobile.studshare.R;
+import com.studshare.mobile.studshare.other.ShowMessage;
 import com.studshare.mobile.studshare.service.ConnectionManager;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
@@ -38,9 +39,8 @@ public class LoginScreenActivity extends AppCompatActivity {
         String login = txtLogin.getText().toString();
         String pass = txtPassword.getText().toString();
 
-        if (login.trim().equals("") || pass.trim().equals(""))
-        {
-            Toast.makeText(getApplicationContext(), "Proszę uzupełnić pola", Toast.LENGTH_SHORT).show();
+        if (login.trim().equals("") || pass.trim().equals("")) {
+            ShowMessage.Show(getApplicationContext(), "Proszę uzupełnić wszystkie pola");
             return;
         }
 
@@ -55,19 +55,19 @@ public class LoginScreenActivity extends AppCompatActivity {
                     Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);
                     startActivity(goToNextActivity);
                 }
-                else{
-                    Toast.makeText(getApplicationContext(), "Nie udało się utworzyć profilu", Toast.LENGTH_SHORT).show();
+                else {
+                    ShowMessage.Show(getApplicationContext(), "Nie udało się utworzyć profilu");
                 }
             }
             else if (loginStatus == ProfileManager.OperationStatus.IncorrectLogin || loginStatus == ProfileManager.OperationStatus.IncorrectPassword) {
-                Toast.makeText(getApplicationContext(), "Niepoprawne dane logowania", Toast.LENGTH_SHORT).show();
+                ShowMessage.Show(getApplicationContext(), "Niepoprawne dane logowania");
             }
             else if (loginStatus == ProfileManager.OperationStatus.SQLError || loginStatus == ProfileManager.OperationStatus.NoInternetConnection) {
-                Toast.makeText(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe.", Toast.LENGTH_SHORT).show();
+                ShowMessage.Show(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe");
             }
         }
         catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Błąd połączenia z bazą", Toast.LENGTH_SHORT).show();
+            ShowMessage.Show(getApplicationContext(), "Błąd połączenia z bazą");
         }
     }
 }
