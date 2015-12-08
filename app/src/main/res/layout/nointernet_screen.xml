@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryBlue"
+    android:padding="25px"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/internet"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/txtNoInternetConnection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        style="@style/SectionDescription"
+        android:text="@string/nointernetconnection"
+        />
+
+    <Button
+        android:id="@+id/butReconnect"
+        android:text="@string/tryagain"
+        android:layout_marginTop="40dp"
+        android:onClick="tryReconnect"
+        style="@style/NonImageButtonInverted"/>
+
+</LinearLayout>

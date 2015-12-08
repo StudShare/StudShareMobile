@@ -44,10 +44,10 @@ public class LoginScreenActivity extends AppCompatActivity {
             return;
         }
 
-        boolean loggedSuccessfully = profileManager.tryLogin(login, pass);
+        int loginStatus = profileManager.tryLogin(login, pass);
 
         try {
-            if (loggedSuccessfully) {
+            if (loginStatus == 1) {
 
                 boolean savedSuccessfully = profileManager.saveProfile(getApplicationContext(), txtLogin.getText().toString(), txtPassword.getText().toString());
 
@@ -59,8 +59,11 @@ public class LoginScreenActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Nie udało się utworzyć profilu", Toast.LENGTH_SHORT).show();
                 }
             }
-            else {
+            else if (loginStatus == 0 || loginStatus == -1){
                 Toast.makeText(getApplicationContext(), "Niepoprawne dane logowania", Toast.LENGTH_SHORT).show();
+            }
+            else if (loginStatus == -2 || loginStatus == -3){
+                Toast.makeText(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe.", Toast.LENGTH_SHORT).show();
             }
         }
         catch (Exception e) {

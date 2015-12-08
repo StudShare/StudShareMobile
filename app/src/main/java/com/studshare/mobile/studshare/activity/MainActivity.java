@@ -25,15 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (profile == null)
             setContentView(R.layout.welcome_screen);
-        else{
-            boolean loggedSuccessfully = profileManager.tryLogin(profileManager.getLogin(), profileManager.getPassword());
+        else {
+            int loginStatus = profileManager.tryLogin(profileManager.getLogin(), profileManager.getPassword());
 
-            if (loggedSuccessfully) {
+            if (loginStatus == 1) {
                 Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);
                 startActivity(goToNextActivity);
             }
-            else    //nie udalo sie zalogowac danymi przechowywanymi w urzadzeniu (np. haslo zostalo zmienione od czasu poprzedniego logowania)
-            {
+            else if (loginStatus == -3) {
+                Intent goToNextActivity = new Intent(getApplicationContext(), NoInternetScreenActivity.class);
+                startActivity(goToNextActivity);
+            }
+            else {
                 setContentView(R.layout.welcome_screen);
             }
         }

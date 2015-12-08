@@ -93,7 +93,7 @@ public class ProfileManager
         }
     }
 
-    public boolean tryLogin(String Login, String Password)
+    public int tryLogin(String Login, String Password)
     {
         try {
             String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
@@ -111,23 +111,25 @@ public class ProfileManager
                     String downloadedHash = rsHash.getString(1);
 
                     if (downloadedHash.equals(hash)){
-                        return true;
+                        return 1;
                     }
                     else {
-                        return false;
+                        return 0;   //hash sie nie zgadza
                     }
                 }
                 else {
-                    return false;
+                    return -1;  //podany login nie istnieje
                 }
             }
             else {
-                return false;
+                return -1;  //podany login nie istnieje
             }
         }
-        catch (SQLException e)
-        {
-            return false;
+        catch (SQLException e) {
+            return -2;  //blad SQL
+        }
+        catch (NullPointerException e) {
+            return -3; //brak polaczenia z internetem
         }
     }
 
