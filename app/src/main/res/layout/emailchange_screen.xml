@@ -70,6 +70,7 @@
                 android:id="@+id/butChangeEmail"
                 android:layout_margin="25dp"
                 android:text="@string/profile_emailchange_changeemail"
+                android:onClick="tryChangeEmail"
                 style="@style/NonImageButton"/>
 
         </LinearLayout>

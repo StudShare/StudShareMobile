@@ -228,4 +228,28 @@ public class ProfileManager
             return OperationStatus.SQLError;
         }
     }
+
+    public OperationStatus changeEmail(String newEmail) {
+        try {
+            String checkEmailAvailability = "SELECT * FROM " + UsersTableName + " WHERE email='" + newEmail + "'";
+            ResultSet rsEmail = connectionManager.SendQuery(checkEmailAvailability);
+
+            if (rsEmail.next()) {
+                return OperationStatus.LoginOrEmailInUse;
+            }
+            else {
+                String query = "UPDATE " + UsersTableName + " SET email='" + newEmail + "' WHERE login='" + getLogin() + "'";
+                int result = connectionManager.SendUpdate(query);
+
+                if (result == 1) {
+                    return OperationStatus.Success;
+                } else {
+                    return OperationStatus.IncorrectLogin;
+                }
+            }
+        }
+        catch (SQLException e) {
+            return OperationStatus.SQLError;
+        }
+    }
 }

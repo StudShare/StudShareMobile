@@ -6,20 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.ShowMessage;
 import com.studshare.mobile.studshare.service.ProfileManager;
-import com.studshare.mobile.studshare.service.ConnectionManager;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class PasswordChangeScreenActivity extends AppCompatActivity {
 
     ProfileManager profileManager = new ProfileManager();
-    ConnectionManager connectionManager = new ConnectionManager();
 
     EditText txtPassword;
     EditText txtNewPassword;

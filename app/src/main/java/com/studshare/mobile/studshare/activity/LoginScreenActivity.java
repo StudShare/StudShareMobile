@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.ShowMessage;
-import com.studshare.mobile.studshare.service.ConnectionManager;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
 import java.sql.ResultSet;
