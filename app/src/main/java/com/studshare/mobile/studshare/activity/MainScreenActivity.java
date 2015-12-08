@@ -23,4 +23,9 @@ public class MainScreenActivity extends AppCompatActivity {
         Intent goToNextActivity = new Intent(getApplicationContext(), ProfileScreenActivity.class);
         startActivity(goToNextActivity);
     }
+
+    public void goToAddScreen(View view) {
+        Intent goToNextActivity = new Intent(getApplicationContext(), AddScreenActivity.class);
+        startActivity(goToNextActivity);
+    }
 }

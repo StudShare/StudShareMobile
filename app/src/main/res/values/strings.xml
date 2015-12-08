@@ -29,4 +29,5 @@
     <string name="profile_emailchange_changeemail">ZMIEŃ E-MAIL</string>
     <string name="nointernetconnection">Brak połączenia z Internetem. Sprawdź połączenie i kliknij przycisk poniżej.</string>
     <string name="tryagain">SPRÓBUJ PONOWNIE</string>
+    <string name="add_header">Dodaj</string>
 </resources>
