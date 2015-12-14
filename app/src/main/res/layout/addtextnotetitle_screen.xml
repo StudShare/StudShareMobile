@@ -31,45 +31,42 @@
                     android:adjustViewBounds="true" />
 
                 <TextView
-                    android:id="@+id/txtSignupInfo"
-                    android:text="@string/signup_header"
+                    android:id="@+id/txtAddInfo"
+                    android:text="@string/add_note_header"
                     style="@style/SectionHeader" />
 
                 <TextView
-                    android:id="@+id/txtSignupInfo2"
-                    android:text="@string/signup_text"
+                    android:id="@+id/txtAddInfo2"
+                    android:text="@string/add_note_description"
                     style="@style/SectionDescription" />
 
             </RelativeLayout>
 
             <EditText
-                android:id="@+id/txtLogin"
-                android:hint="@string/login_login_hint"
+                android:id="@+id/txtTitle"
+                android:hint="@string/add_note_title"
                 style="@style/TextBox" />
 
             <EditText
-                android:id="@+id/txtPassword"
-                android:hint="@string/login_password_hint"
-                android:inputType="textPassword"
+                android:id="@+id/txtTags"
+                android:hint="TAGI"
                 style="@style/TextBox" />
 
+<!--
             <EditText
-                android:id="@+id/txtPasswordRepeat"
-                android:hint="@string/signup_passwordrepeat_hint"
-                android:inputType="textPassword"
-                style="@style/TextBox" />
-
-            <EditText
-                android:id="@+id/txtEmail"
-                android:hint="@string/signup_email_hint"
-                android:inputType="textEmailAddress"
-                style="@style/TextBox" />
+                android:id="@+id/txtContent"
+                android:hint="ZAWARTOSC NOTATKI"
+                style="@style/TextBox"
+                android:inputType="textMultiLine"
+                android:layout_height="wrap_content"
+                android:singleLine="false"/>
+                -->
 
             <Button
-                android:id="@+id/butSignup"
-                android:onClick="trySignup"
+                android:id="@+id/butNext"
+                android:onClick="goNext"
                 android:layout_margin="25dp"
-                android:text="@string/signup"
+                android:text="DALEJ"
                 style="@style/NonImageButton"/>
 
         </LinearLayout>

@@ -1,8 +1,7 @@
 package com.studshare.mobile.studshare.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.studshare.mobile.studshare.R;
+import com.studshare.mobile.studshare.other.CameraPhoto;
 import com.studshare.mobile.studshare.other.CustomList;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
@@ -26,6 +26,8 @@ public class AddScreenActivity extends AppCompatActivity {
             R.drawable.camera,
             R.drawable.file
     };
+
+    private static final int CAMERA_REQUEST = 1888;
 
     ProfileManager profileManager = new ProfileManager();
 
@@ -44,9 +46,26 @@ public class AddScreenActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                if (id == 1) {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+            CameraPhoto cp = new CameraPhoto();
+            cp.setPhoto(photo);
+
+            View view = findViewById(android.R.id.content);
+
+            Intent goToNextActivity = new Intent(view.getContext(), AddPhotoNoteScreenActivity.class);
+            startActivity(goToNextActivity);
+        }
     }
 
     public void goToMainScreen(View view) {
