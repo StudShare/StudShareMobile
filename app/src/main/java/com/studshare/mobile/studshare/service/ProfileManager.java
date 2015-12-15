@@ -14,6 +14,7 @@ import java.sql.SQLException;
 public class ProfileManager
 {
     private final String UsersTableName = "SiteUser";
+    private final String NotesTableName = "Note";
     private String FILENAME = "profile";
     private static String Login;
     private static String Password;
@@ -272,5 +273,19 @@ public class ProfileManager
         catch (Exception e) {
             return -2;
         }
+    }
+
+    public ResultSet getAllUserNotes() {
+
+        String getAllUserNotesQuery = "SELECT * FROM " + NotesTableName + " WHERE idSiteUser=" + getUserID();
+
+        return connectionManager.SendQuery(getAllUserNotesQuery);
+    }
+
+    public ResultSet getNumberOfUserNotes() {
+
+        String getAllUserNotesQuery = "SELECT COUNT(*) AS rowco FROM " + NotesTableName + " WHERE idSiteUser=" + getUserID();
+
+        return connectionManager.SendQuery(getAllUserNotesQuery);
     }
 }
