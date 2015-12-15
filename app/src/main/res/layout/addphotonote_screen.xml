@@ -1,21 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PHOTO">
-    </Button>
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_height="wrap_content"
-        android:src="@drawable/welcome_logo"
-        android:layout_width="wrap_content">
+    android:background="#ffffff"
+    android:layout_margin="0px"
+    android:padding="0px">
 
-    </ImageView>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <ImageView
+                    android:id="@+id/imgWelcomeTextBg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/welcome_text_bg2"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true" />
+
+                <TextView
+                    android:id="@+id/txtAddInfo"
+                    android:text="@string/add_note_header"
+                    style="@style/SectionHeader" />
+
+                <TextView
+                    android:id="@+id/txtAddInfo2"
+                    android:text="@string/add_note_description"
+                    style="@style/SectionDescription" />
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/txtTitle"
+                android:hint="@string/add_note_title"
+                style="@style/TextBox" />
+
+            <EditText
+                android:id="@+id/txtTags"
+                android:hint="@string/add_note_tags"
+                style="@style/TextBox" />
+
+
+            <Button
+                android:id="@+id/butAdd"
+                android:onClick="tryAdd"
+                android:layout_margin="25dp"
+                android:text="@string/add_note_add"
+                style="@style/NonImageButton"/>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

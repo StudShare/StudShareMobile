@@ -252,4 +252,25 @@ public class ProfileManager
             return OperationStatus.SQLError;
         }
     }
+
+    public int getUserID() {
+        try {
+            String getIDQuery = "SELECT idSiteUser FROM " + UsersTableName + " WHERE login='" + getLogin() + "'";
+
+            ResultSet rsID = connectionManager.SendQuery(getIDQuery);
+
+            if (rsID.next()) {
+                return rsID.getInt(1);
+            }
+            else {
+                return -3;
+            }
+        }
+        catch (SQLException sqle) {
+            return -1;
+        }
+        catch (Exception e) {
+            return -2;
+        }
+    }
 }
