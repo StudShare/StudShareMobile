@@ -37,7 +37,7 @@ public class AddScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.add_screen);
 
-        CustomList adapter = new CustomList(AddScreenActivity.this, web, imageId);
+        CustomList adapter = new CustomList(AddScreenActivity.this, web, imageId, R.layout.list_single_whitetext);
 
         list = (ListView)findViewById(android.R.id.list);
         list.setAdapter(adapter);

@@ -29,63 +29,46 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     private void loadUserNotes() {
+        int numberOfNotes = profileManager.getNumberOfUserNotes();
 
-        int numberOfNotes = 9;
-        ResultSet rsUserNotes = profileManager.getNumberOfUserNotes();
+        if (numberOfNotes > 0) {
+            int index = 0;
+            String[] names = new String[numberOfNotes];
+            Integer[] imageId = new Integer[numberOfNotes];
 
-        //try {
-            /*if (rsUserNotes != null) {
-                numberOfNotes = rsUserNotes.getInt("rowco");
-            }
-            else {
-                //user has no notes
-                return;
-            }*/
+            ResultSet rsUserNotes = profileManager.getAllUserNotes();
 
-            if (numberOfNotes > 0) {
-                int index = 0;
-                String[] names = new String[numberOfNotes];
-                Integer[] imageId = new Integer[numberOfNotes];
+            try {
+                while (rsUserNotes.next()) {
+                    names[index] = rsUserNotes.getString(3);    //Get note title
 
-                rsUserNotes = profileManager.getAllUserNotes();
-
-                try {
-                    while (rsUserNotes.next()) {
-                        names[index] = rsUserNotes.getString(3);
-
-                        //!!!TEMPORARY!!!
-                        if (rsUserNotes.getString(4).equals("") || rsUserNotes.getString(4).equals("brak")) {
-
-                            imageId[index] = R.drawable.camera;
-                        } else {
-                            imageId[index] = R.drawable.text;
-                        }
-
-                        index++;
+                    //!!!TEMPORARY!!!
+                    if (rsUserNotes.getString(4).equals("") || rsUserNotes.getString(4).equals("brak")) {
+                        imageId[index] = R.drawable.camera;
+                    } else {
+                        imageId[index] = R.drawable.text;
                     }
 
-                    CustomList adapter = new CustomList(MainScreenActivity.this, names, imageId);
-
-                    list = (ListView) findViewById(android.R.id.list);
-                    list.setAdapter(adapter);
-
-                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            //TODO
-                        }
-                    });
+                    index++;
                 }
-                catch (SQLException sqle) {
-                    return;
-                }
+
+                CustomList adapter = new CustomList(MainScreenActivity.this, names, imageId, R.layout.list_single_bluetext);
+
+                list = (ListView) findViewById(android.R.id.list);
+                list.setAdapter(adapter);
+
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //Open preview window
+                    }
+                });
             }
-        //}
-        /*catch (SQLException sqle) {
-            return;
-        }*/
-
+            catch (SQLException sqle) {
+                return;
+            }
+        }
     }
 
     public void goToProfileSettings(View view) {

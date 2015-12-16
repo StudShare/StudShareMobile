@@ -282,10 +282,23 @@ public class ProfileManager
         return connectionManager.SendQuery(getAllUserNotesQuery);
     }
 
-    public ResultSet getNumberOfUserNotes() {
+    public int getNumberOfUserNotes() {
+        //Proper SELECT COUNT query for some reason returned null.
+        //Need to check number of rows returned from query manually.
 
-        String getAllUserNotesQuery = "SELECT COUNT(*) AS rowco FROM " + NotesTableName + " WHERE idSiteUser=" + getUserID();
+        ResultSet rsNotes = getAllUserNotes();
 
-        return connectionManager.SendQuery(getAllUserNotesQuery);
+        try {
+            int numberOfNotes = 0;
+
+            while (rsNotes.next()) {
+                numberOfNotes++;
+            }
+
+            return numberOfNotes;
+        }
+        catch (SQLException sqle) {
+            return -1;
+        }
     }
 }

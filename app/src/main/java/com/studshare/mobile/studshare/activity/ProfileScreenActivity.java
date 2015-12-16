@@ -37,7 +37,7 @@ public class ProfileScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.profile_screen);
 
-        CustomList adapter = new CustomList(ProfileScreenActivity.this, web, imageId);
+        CustomList adapter = new CustomList(ProfileScreenActivity.this, web, imageId, R.layout.list_single_whitetext);
 
         list = (ListView)findViewById(android.R.id.list);
         list.setAdapter(adapter);
