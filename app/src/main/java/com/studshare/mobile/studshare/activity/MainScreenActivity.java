@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.CustomList;
+import com.studshare.mobile.studshare.other.NotesList;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
     ListView list;
     ProfileManager profileManager = new ProfileManager();
+    NotesList notesList = new NotesList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,13 @@ public class MainScreenActivity extends AppCompatActivity {
             String[] names = new String[numberOfNotes];
             Integer[] imageId = new Integer[numberOfNotes];
 
+            notesList.setList(new int[numberOfNotes]);
+
             ResultSet rsUserNotes = profileManager.getAllUserNotes();
 
             try {
                 while (rsUserNotes.next()) {
+                    notesList.add(index, rsUserNotes.getInt(1));
                     names[index] = rsUserNotes.getString(3);    //Get note title
 
                     //!!!TEMPORARY!!!
@@ -62,10 +67,17 @@ public class MainScreenActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //Open preview window
+                        notesList.setChosenID((int)id);
+
+                        Intent goToNextActivity = new Intent(getApplicationContext(), PhotoNotePreviewScreenActivity.class);
+                        startActivity(goToNextActivity);
                     }
                 });
             }
             catch (SQLException sqle) {
+                return;
+            }
+            catch (Exception e) {
                 return;
             }
         }

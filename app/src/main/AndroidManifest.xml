@@ -46,6 +46,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.AddPhotoNoteScreenActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.PhotoNotePreviewScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
