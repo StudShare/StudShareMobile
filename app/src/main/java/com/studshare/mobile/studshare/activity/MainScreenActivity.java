@@ -45,10 +45,9 @@ public class MainScreenActivity extends AppCompatActivity {
             try {
                 while (rsUserNotes.next()) {
                     notesList.add(index, rsUserNotes.getInt(1));
-                    names[index] = rsUserNotes.getString(3);    //Get note title
+                    names[index] = rsUserNotes.getString(2);    //Get note title
 
-                    //!!!TEMPORARY!!!
-                    if (rsUserNotes.getString(4).equals("") || rsUserNotes.getString(4).equals("brak")) {
+                    if (rsUserNotes.getString(3).equals("photo")) {
                         imageId[index] = R.drawable.camera;
                     } else {
                         imageId[index] = R.drawable.text;

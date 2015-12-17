@@ -50,7 +50,7 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
         //Getting taken photo
         Bitmap bitmap = cp.getPhoto();
 
-        String query = "INSERT INTO Note(idSiteUser, title, textContent, pictureContent) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(bitmap) + "')";
+        String query = "INSERT INTO Note(idSiteUser, title, textContent, pictureContent, noteType) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(bitmap) + "', 'photo')";
         int result = connectionManager.SendUpdate(query);
 
         if (result == -1) {

@@ -277,7 +277,7 @@ public class ProfileManager
 
     public ResultSet getAllUserNotes() {
 
-        String getAllUserNotesQuery = "SELECT * FROM " + NotesTableName + " WHERE idSiteUser=" + getUserID();
+        String getAllUserNotesQuery = "SELECT idNote, title, noteType FROM " + NotesTableName + " WHERE idSiteUser=" + getUserID();
 
         return connectionManager.SendQuery(getAllUserNotesQuery);
     }
