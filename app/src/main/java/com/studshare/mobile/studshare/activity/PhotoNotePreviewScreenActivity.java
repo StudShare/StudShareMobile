@@ -12,16 +12,15 @@ import android.widget.ImageView;
 
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.NotesList;
-import com.studshare.mobile.studshare.service.ConnectionManager;
+import com.studshare.mobile.studshare.other.ShowMessage;
+import com.studshare.mobile.studshare.service.NoteManager;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private NotesList notesList = new NotesList();
-    ConnectionManager connectionManager = new ConnectionManager();
+    NoteManager noteManager = new NoteManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,30 +30,19 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
 
         imageView = (ImageView)findViewById(R.id.photoPreview);
 
-        try {
-            loadPhoto(notesList.getChosenID());
-        }
-        catch (Exception e) {
-            return;
-        }
+        loadPhoto(notesList.getChosenID());
     }
 
     private void loadPhoto(int index) {
-        String query = "SELECT pictureContent FROM Note WHERE idNote = " + notesList.getItem(index);
 
-        ResultSet rs = connectionManager.SendQuery(query);
+        String receivedBitmap = noteManager.getNotePictureContent(notesList.getItem(index));
 
-        try {
-            if (rs.next()) {
-                Bitmap receivedPhoto = base64ToBitmap(rs.getString(1));
-                imageView.setImageBitmap(receivedPhoto);
-            }
+        if (receivedBitmap != null) {
+            Bitmap receivedPhoto = base64ToBitmap(receivedBitmap);
+            imageView.setImageBitmap(receivedPhoto);
         }
-        catch (SQLException sqle) {
-            return;
-        }
-        catch (Exception e) {
-            return;
+        else {
+            ShowMessage.Show(getApplicationContext(), "Wystąpił błąd odczytu zdjęcia z bazy. Proszę sprawdzić połączenie internetowe.");
         }
     }
 

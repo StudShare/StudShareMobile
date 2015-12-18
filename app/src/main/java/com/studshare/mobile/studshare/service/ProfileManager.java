@@ -6,15 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProfileManager
 {
-    private final String UsersTableName = "SiteUser";
-    private final String NotesTableName = "Note";
+    private final String USERS_TABLE_NAME = "SiteUser";
     private String FILENAME = "profile";
     private static String Login;
     private static String Password;
@@ -110,7 +107,7 @@ public class ProfileManager
     public OperationStatus tryLogin(String Login, String Password)
     {
         try {
-            String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
+            String getSalt = "SELECT salt FROM " + USERS_TABLE_NAME + " WHERE login='" + Login + "'";
             ResultSet rsSalt = connectionManager.SendQuery(getSalt);
             String salt = "";
 
@@ -118,7 +115,7 @@ public class ProfileManager
                 salt = rsSalt.getString(1);
                 String hash = passwordMatcher.getSecurePassword(Password.trim(), salt);
 
-                String checkPassword = "SELECT hash FROM " + UsersTableName + " WHERE login='" + Login + "'";
+                String checkPassword = "SELECT hash FROM " + USERS_TABLE_NAME + " WHERE login='" + Login + "'";
                 ResultSet rsHash = connectionManager.SendQuery(checkPassword);
 
                 if (rsHash.next()) {
@@ -150,7 +147,7 @@ public class ProfileManager
     public OperationStatus trySignup(Context context, String login, String password, String email)
     {
         try {
-            String query = "SELECT * FROM " + UsersTableName + " WHERE login='" + login + "' OR email='" + email + "'";
+            String query = "SELECT * FROM " + USERS_TABLE_NAME + " WHERE login='" + login + "' OR email='" + email + "'";
             ResultSet rs = connectionManager.SendQuery(query);
 
             if (rs.next()) {
@@ -161,7 +158,7 @@ public class ProfileManager
                     String salt = passwordMatcher.generateSalt();
                     String hash = passwordMatcher.getSecurePassword(password, salt);
 
-                    query = "INSERT INTO " + UsersTableName + "(login, salt, hash, email) VALUES('" + login + "', '" + salt + "', '" + hash + "', '" + email + "')";
+                    query = "INSERT INTO " + USERS_TABLE_NAME + "(login, salt, hash, email) VALUES('" + login + "', '" + salt + "', '" + hash + "', '" + email + "')";
                     int result = connectionManager.SendUpdate(query);
 
                     if (result == 1) {
@@ -196,7 +193,7 @@ public class ProfileManager
 
     public OperationStatus changePassword(Context context, String newPassword) {
         try {
-            String getSalt = "SELECT salt FROM " + UsersTableName + " WHERE login='" + Login + "'";
+            String getSalt = "SELECT salt FROM " + USERS_TABLE_NAME + " WHERE login='" + Login + "'";
             ResultSet rsSalt = connectionManager.SendQuery(getSalt);
             String salt = "";
             String hash = "";
@@ -206,7 +203,7 @@ public class ProfileManager
 
                 hash = passwordMatcher.getSecurePassword(newPassword, salt);
 
-                String query = "UPDATE " + UsersTableName + " SET hash='" + hash + "' WHERE login='" + getLogin() + "'";
+                String query = "UPDATE " + USERS_TABLE_NAME + " SET hash='" + hash + "' WHERE login='" + getLogin() + "'";
                 int result = connectionManager.SendUpdate(query);
 
                 if (result == 1) {
@@ -232,14 +229,14 @@ public class ProfileManager
 
     public OperationStatus changeEmail(String newEmail) {
         try {
-            String checkEmailAvailability = "SELECT * FROM " + UsersTableName + " WHERE email='" + newEmail + "'";
+            String checkEmailAvailability = "SELECT * FROM " + USERS_TABLE_NAME + " WHERE email='" + newEmail + "'";
             ResultSet rsEmail = connectionManager.SendQuery(checkEmailAvailability);
 
             if (rsEmail.next()) {
                 return OperationStatus.LoginOrEmailInUse;
             }
             else {
-                String query = "UPDATE " + UsersTableName + " SET email='" + newEmail + "' WHERE login='" + getLogin() + "'";
+                String query = "UPDATE " + USERS_TABLE_NAME + " SET email='" + newEmail + "' WHERE login='" + getLogin() + "'";
                 int result = connectionManager.SendUpdate(query);
 
                 if (result == 1) {
@@ -256,7 +253,7 @@ public class ProfileManager
 
     public int getUserID() {
         try {
-            String getIDQuery = "SELECT idSiteUser FROM " + UsersTableName + " WHERE login='" + getLogin() + "'";
+            String getIDQuery = "SELECT idSiteUser FROM " + USERS_TABLE_NAME + " WHERE login='" + getLogin() + "'";
 
             ResultSet rsID = connectionManager.SendQuery(getIDQuery);
 
@@ -272,33 +269,6 @@ public class ProfileManager
         }
         catch (Exception e) {
             return -2;
-        }
-    }
-
-    public ResultSet getAllUserNotes() {
-
-        String getAllUserNotesQuery = "SELECT idNote, title, noteType FROM " + NotesTableName + " WHERE idSiteUser=" + getUserID();
-
-        return connectionManager.SendQuery(getAllUserNotesQuery);
-    }
-
-    public int getNumberOfUserNotes() {
-        //Proper SELECT COUNT query for some reason returned null.
-        //Need to check number of rows returned from query manually.
-
-        ResultSet rsNotes = getAllUserNotes();
-
-        try {
-            int numberOfNotes = 0;
-
-            while (rsNotes.next()) {
-                numberOfNotes++;
-            }
-
-            return numberOfNotes;
-        }
-        catch (SQLException sqle) {
-            return -1;
         }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.CustomList;
 import com.studshare.mobile.studshare.other.NotesList;
+import com.studshare.mobile.studshare.service.NoteManager;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
 import java.sql.ResultSet;
@@ -19,7 +20,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
     ListView list;
     ProfileManager profileManager = new ProfileManager();
+    NoteManager noteManager = new NoteManager();
     NotesList notesList = new NotesList();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
     private void loadUserNotes() {
-        int numberOfNotes = profileManager.getNumberOfUserNotes();
+        int numberOfNotes = noteManager.getNumberOfUserNotes();
 
         if (numberOfNotes > 0) {
             int index = 0;
@@ -40,7 +43,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
             notesList.setList(new int[numberOfNotes]);
 
-            ResultSet rsUserNotes = profileManager.getAllUserNotes();
+            ResultSet rsUserNotes = noteManager.getAllUserNotes();
 
             try {
                 while (rsUserNotes.next()) {
@@ -68,6 +71,8 @@ public class MainScreenActivity extends AppCompatActivity {
                         //Open preview window
                         notesList.setChosenID((int)id);
 
+
+                        //tutaj powinien wywolywac noteManager.getNoteType i sprawdzac jaka aktywnosc uruchomic
                         Intent goToNextActivity = new Intent(getApplicationContext(), PhotoNotePreviewScreenActivity.class);
                         startActivity(goToNextActivity);
                     }

@@ -1,6 +1,5 @@
 package com.studshare.mobile.studshare.activity;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -13,7 +12,7 @@ import android.graphics.Bitmap;
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.CameraPhoto;
 import com.studshare.mobile.studshare.other.ShowMessage;
-import com.studshare.mobile.studshare.service.ConnectionManager;
+import com.studshare.mobile.studshare.service.NoteManager;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
 import java.io.ByteArrayOutputStream;
@@ -24,8 +23,7 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
     private EditText txtTitle;
     private EditText txtTags;
     private CameraPhoto cp = new CameraPhoto();
-    ConnectionManager connectionManager = new ConnectionManager();
-    ProfileManager profileManager = new ProfileManager();
+    NoteManager noteManager = new NoteManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +48,9 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
         //Getting taken photo
         Bitmap bitmap = cp.getPhoto();
 
-        String query = "INSERT INTO Note(idSiteUser, title, textContent, pictureContent, noteType) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(bitmap) + "', 'photo')";
-        int result = connectionManager.SendUpdate(query);
+        ProfileManager.OperationStatus result = noteManager.add(title, bitmap);
 
-        if (result == -1) {
+        if (result == ProfileManager.OperationStatus.OtherError) {
             ShowMessage.Show(getApplicationContext(), "Wystąpił błąd dodawania zdjęcia do bazy. Proszę sprawdzić połączenie internetowe.");
         }
 
@@ -61,11 +58,4 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
         startActivity(goToNextActivity);
     }
 
-    private String bitmapToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
 }
