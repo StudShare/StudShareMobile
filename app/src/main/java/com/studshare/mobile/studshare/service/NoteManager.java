@@ -136,4 +136,29 @@ public class NoteManager {
         }
     }
 
+    public boolean delete(int id) {
+        String query = "DELETE FROM " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
+
+        int result = connectionManager.SendUpdate(query);
+
+        if (result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean updateTitle(int id, String newTitle) {
+        String query = "UPDATE " + NOTES_TABLE_NAME + " SET title='" + newTitle + "' WHERE idNote=" + id;
+
+        int result = connectionManager.SendUpdate(query);
+
+        if (result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

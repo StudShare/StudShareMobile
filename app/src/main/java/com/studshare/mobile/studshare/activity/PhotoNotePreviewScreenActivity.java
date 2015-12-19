@@ -1,5 +1,7 @@
 package com.studshare.mobile.studshare.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -49,6 +51,39 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
     private Bitmap base64ToBitmap(String b64) {
         byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
+
+    public void doDelete(View view) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        boolean deleteSuccessful = noteManager.delete(notesList.getItem(notesList.getChosenID()));
+
+                        if (deleteSuccessful)
+                        {
+                            Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(goToNextActivity);
+                        }
+                        else {
+                            ShowMessage.Show(getApplicationContext(), "Wystąpił błąd usuwania zdjęcia z bazy. Proszę sprawdzić połączenie internetowe.");
+                        }
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setMessage("Czy na pewno chcesz usunąć tę notatkę?").setPositiveButton("Tak", dialogClickListener).setNegativeButton("Nie", dialogClickListener).show();
+    }
+
+    public void doEdit(View view) {
+        Intent goToNextActivity = new Intent(getApplicationContext(), EditPhotoNoteScreenActivity.class);
+        startActivity(goToNextActivity);
     }
 
 }

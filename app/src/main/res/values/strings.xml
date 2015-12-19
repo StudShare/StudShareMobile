@@ -31,8 +31,11 @@
     <string name="tryagain">SPRÓBUJ PONOWNIE</string>
     <string name="add_header">Dodaj</string>
     <string name="add_note_header">Dodawanie</string>
-    <string name="add_note_description">Podaj tytuł notatki oraz tagi, które opisują tę notatkę, a następnie kliknij w przycisk "Dodaj notatkę".</string>
+    <string name="add_note_description">Podaj tytuł notatki oraz tagi, które opisują tę notatkę, a następnie kliknij w przycisk DODAJ.</string>
     <string name="add_note_title">TYTUŁ</string>
     <string name="add_note_tags">TAGI</string>
     <string name="add_note_add">DODAJ</string>
+    <string name="edit_note_header">Edycja</string>
+    <string name="edit_note_description">Zmień tytuł notatki lub tagi, które opisują tę notatkę, a następnie kliknij w przycisk ZAPISZ ZMIANY.</string>
+    <string name="edit_note_save">ZAPISZ ZMIANY</string>
 </resources>

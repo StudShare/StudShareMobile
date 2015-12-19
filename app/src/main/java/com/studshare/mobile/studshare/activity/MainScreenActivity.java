@@ -71,10 +71,10 @@ public class MainScreenActivity extends AppCompatActivity {
                         //Open preview window
                         notesList.setChosenID((int)id);
 
-
-                        //tutaj powinien wywolywac noteManager.getNoteType i sprawdzac jaka aktywnosc uruchomic
-                        Intent goToNextActivity = new Intent(getApplicationContext(), PhotoNotePreviewScreenActivity.class);
-                        startActivity(goToNextActivity);
+                        if (noteManager.getNoteType(notesList.getItem(notesList.getChosenID())).equals("photo")) {
+                            Intent goToNextActivity = new Intent(getApplicationContext(), PhotoNotePreviewScreenActivity.class);
+                            startActivity(goToNextActivity);
+                        }
                     }
                 });
             }
