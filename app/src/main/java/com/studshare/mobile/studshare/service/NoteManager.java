@@ -3,7 +3,10 @@ package com.studshare.mobile.studshare.service;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
+import com.studshare.mobile.studshare.other.CameraPhoto;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,11 +18,19 @@ public class NoteManager {
 
 
     private String bitmapToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        try {
+            CameraPhoto cp = new CameraPhoto();
 
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+            return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
     public ResultSet getAllUserNotes() {
