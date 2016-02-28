@@ -158,7 +158,8 @@ public class ProfileManager
                     String salt = passwordMatcher.generateSalt();
                     String hash = passwordMatcher.getSecurePassword(password, salt);
 
-                    query = "INSERT INTO " + USERS_TABLE_NAME + "(login, salt, hash, email) VALUES('" + login + "', '" + salt + "', '" + hash + "', '" + email + "')";
+                    query = "INSERT INTO " + USERS_TABLE_NAME + "(login, salt, hash, email, enabled) VALUES('" + login + "', '" + salt + "', '" + hash + "', '" + email + "', 'true')";
+
                     int result = connectionManager.SendUpdate(query);
 
                     if (result == 1) {

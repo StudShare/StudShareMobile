@@ -60,8 +60,13 @@ public class LoginScreenActivity extends AppCompatActivity {
             else if (loginStatus == ProfileManager.OperationStatus.IncorrectLogin || loginStatus == ProfileManager.OperationStatus.IncorrectPassword) {
                 ShowMessage.Show(getApplicationContext(), "Niepoprawne dane logowania");
             }
-            else if (loginStatus == ProfileManager.OperationStatus.SQLError || loginStatus == ProfileManager.OperationStatus.NoInternetConnection) {
-                ShowMessage.Show(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe");
+            else if (loginStatus == ProfileManager.OperationStatus.SQLError) {
+                ShowMessage.Show(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe 1");
+            }
+            else if(loginStatus == ProfileManager.OperationStatus.NoInternetConnection)
+            {
+                ShowMessage.Show(getApplicationContext(), "Nie udało się nawiązać połączenia z serwerem. Sprawdź połączenie internetowe 2");
+
             }
         }
         catch (Exception e) {

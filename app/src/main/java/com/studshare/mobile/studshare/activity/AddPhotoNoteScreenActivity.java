@@ -16,6 +16,8 @@ import com.studshare.mobile.studshare.service.NoteManager;
 import com.studshare.mobile.studshare.service.ProfileManager;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 
 public class AddPhotoNoteScreenActivity extends AppCompatActivity {
@@ -33,7 +35,16 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
 
         txtTitle = (EditText)this.findViewById(R.id.txtTitle);
         txtTags = (EditText)this.findViewById(R.id.txtTags);
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            ext  = extras.getString("extension");
+            pathToFile  = extras.getString("fileToPass");
+        }
     }
+    String ext="photo";
+    String pathToFile="null";
 
     public void tryAdd(View view) {
 
@@ -44,11 +55,25 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
             ShowMessage.Show(getApplicationContext(), "Proszę uzupełnić wszystkie pola");
             return;
         }
-
+        ProfileManager.OperationStatus result;
         //Getting taken photo
         Bitmap bitmap = cp.getPhoto();
 
-        ProfileManager.OperationStatus result = noteManager.add(title, bitmap);
+        if (ext.equals("photo"))
+            result = noteManager.add(title, bitmap, ext);
+
+        else {
+            FileInputStream fis = null;
+            try
+            {
+                File file = new File(pathToFile);
+                fis = new FileInputStream(file);
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+            result = noteManager.add2(title, fis, ext);
+
+        }
 
         if (result == ProfileManager.OperationStatus.OtherError) {
             ShowMessage.Show(getApplicationContext(), "Wystąpił błąd dodawania zdjęcia do bazy. Proszę sprawdzić połączenie internetowe.");

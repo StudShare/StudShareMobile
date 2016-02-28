@@ -9,7 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
+import java.io.File;
+import java.io.FileInputStream;
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.CameraPhoto;
 import com.studshare.mobile.studshare.other.CustomList;
@@ -110,15 +111,35 @@ public class AddScreenActivity extends AppCompatActivity {
                 //cp.setFilePath(filePath);
 
                 Intent goToNextActivity = new Intent(view.getContext(), AddPhotoNoteScreenActivity.class);
+                goToNextActivity.putExtra("extension", "photo");
                 startActivity(goToNextActivity);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 // to nie obrazek
+
+
+               // Uri fileUri = data.getData();
+                String FilePath = data.getData().getPath();
+
+
+
+                int dotposition= FilePath.lastIndexOf(".");
+                String filename_Without_Ext = FilePath.substring(0,dotposition);
+                String extTemp = FilePath.substring(dotposition + 1, FilePath.length());
+
+                Intent goToNextActivity = new Intent(view.getContext(), AddPhotoNoteScreenActivity.class);
+                goToNextActivity.putExtra("extension", extTemp);
+                goToNextActivity.putExtra("fileToPass", FilePath);
+                startActivity(goToNextActivity);
             }
 
 
         }
     }
+
+
+
 
     public void goToMainScreen(View view) {
         Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);

@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
+import android.net.Uri;
+import java.io.File;
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.CustomList;
 import com.studshare.mobile.studshare.other.NotesList;
@@ -71,9 +72,19 @@ public class MainScreenActivity extends AppCompatActivity {
                         //Open preview window
                         notesList.setChosenID((int)id);
 
-                        if (noteManager.getNoteType(notesList.getItem(notesList.getChosenID())).equals("photo")) {
+                        if (noteManager.getNoteType(notesList.getItem(notesList.getChosenID())).equals("photo"))
+                        {
+
                             Intent goToNextActivity = new Intent(getApplicationContext(), PhotoNotePreviewScreenActivity.class);
                             startActivity(goToNextActivity);
+                        }
+                        else
+                        {
+                            noteManager.getFileData((int)id);
+                            File plik = new File("note."+noteManager.getNoteType((int)id));
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent.setDataAndType(Uri.fromFile(plik), "*/*");
+                            startActivity(intent);
                         }
                     }
                 });
