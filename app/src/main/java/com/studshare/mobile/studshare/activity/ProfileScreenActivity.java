@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.studshare.mobile.studshare.R;
+import com.studshare.mobile.studshare.service.ConnectionManager;
 import com.studshare.mobile.studshare.service.ProfileManager;
 import com.studshare.mobile.studshare.other.CustomList;
 
@@ -66,6 +68,9 @@ public class ProfileScreenActivity extends AppCompatActivity {
         Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);
         startActivity(goToNextActivity);
     }
+
+
+
 
     public void doLogOut(View view) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {

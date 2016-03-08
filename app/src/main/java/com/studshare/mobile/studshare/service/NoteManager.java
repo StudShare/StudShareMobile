@@ -3,6 +3,7 @@ package com.studshare.mobile.studshare.service;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
+import com.studshare.mobile.studshare.activity.Save_text;
 import com.studshare.mobile.studshare.other.CameraPhoto;
 import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,6 +13,11 @@ import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.OutputStream;
+import android.util.Log;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class NoteManager {
 
@@ -73,7 +79,7 @@ public class NoteManager {
         //
         // Adding photo to database
         //
-        String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent2, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(photo) + "', '" + extension + "')";
+        String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(photo) + "', '" + extension + "')";
 
         int result = connectionManager.SendUpdate(query);
 
@@ -85,12 +91,12 @@ public class NoteManager {
         }
     }
 
-    public ProfileManager.OperationStatus add2(String title, FileInputStream fileSend, String extension) {
+    public ProfileManager.OperationStatus add2(String title,String noteContex, String extension) {
         //
         // Adding file to database
         //
-        String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + fileSend + "', '" + extension + "')";
-
+        String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '"+noteContex+"', NULL, '" + extension + "')";
+        Save_text.type_note="photo";
         int result = connectionManager.SendUpdate(query);
 
         if (result == 1) {
@@ -99,23 +105,52 @@ public class NoteManager {
         else {
             return ProfileManager.OperationStatus.OtherError;
         }
+    }
+
+    public ProfileManager.OperationStatus add3(String title, FileInputStream fileSend, String extension, File file) {
+        //
+        // Adding file to database
+        //
+        String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + fileSend + "', '" + extension + "')";
+
+
+
+        int result = connectionManager.SendUpdate2(file, profileManager.getUserID(), title,extension);
+        if (result == 1) {
+            return ProfileManager.OperationStatus.Success;
+        }
+        else {
+            return ProfileManager.OperationStatus.OtherError;
+        }
+
     }
 
     public void getFileData(int id) {
 
         byte[] fileBytes;
         String query;
+
         try {
-            query =
-                    "select data from " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
-            //Statement state = conn.createStatement();
+
+            query = "select filecontent from " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
+
             ResultSet rs = connectionManager.SendQuery(query);
             if (rs.next()) {
                 fileBytes = rs.getBytes(1);
                 OutputStream targetFile=  new FileOutputStream(
-                        "note."+getNoteType(id));
+                        "/storage/sdcard/Download/note.pdf");//+getNoteType(id));
                 targetFile.write(fileBytes);
                 targetFile.close();
+
+
+                FileOutputStream stream = new FileOutputStream("/storage/sdcard/Download/note.pdf");
+                try {
+                    stream.write(fileBytes);
+                } finally {
+                    stream.close();
+                }
+
+                Log.d("AAAAA", "done");
             }
 
         } catch (Exception e) {
@@ -159,7 +194,7 @@ public class NoteManager {
     }
 
     public String getNotePictureContent(int id) {
-        String query = "SELECT pictureContent2 FROM " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
+        String query = "SELECT pictureContent FROM " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
 
         ResultSet result = connectionManager.SendQuery(query);
 

@@ -38,4 +38,6 @@
     <string name="edit_note_header">Edycja</string>
     <string name="edit_note_description">Zmień tytuł notatki lub tagi, które opisują tę notatkę, a następnie kliknij w przycisk ZAPISZ ZMIANY.</string>
     <string name="edit_note_save">ZAPISZ ZMIANY</string>
+    <string name="title_activity_samp2">Samp2</string>
+    <string name="add_note2_header">Dod NOTATKA</string>
 </resources>

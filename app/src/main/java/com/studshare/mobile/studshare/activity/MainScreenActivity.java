@@ -32,6 +32,8 @@ public class MainScreenActivity extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         loadUserNotes();
+
+
     }
 
     private void loadUserNotes() {
@@ -78,13 +80,27 @@ public class MainScreenActivity extends AppCompatActivity {
                             Intent goToNextActivity = new Intent(getApplicationContext(), PhotoNotePreviewScreenActivity.class);
                             startActivity(goToNextActivity);
                         }
+
+                        else if(noteManager.getNoteType(notesList.getItem(notesList.getChosenID())).equals("text"))
+                        {
+                            Intent goToNextActivity = new Intent(getApplicationContext(), Sample.class);
+                            startActivity(goToNextActivity);
+                        }
+
                         else
                         {
                             noteManager.getFileData((int)id);
-                            File plik = new File("note."+noteManager.getNoteType((int)id));
+
+
+
+                            String videoUrl = "/storage/sdcard/Download/note.pdf";
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setDataAndType(Uri.parse(videoUrl),"*/*");
+                            startActivity(i);
+                            /*File plik = new File("note."+noteManager.getNoteType((int)id));
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.setDataAndType(Uri.fromFile(plik), "*/*");
-                            startActivity(intent);
+                            intent.setDataAndType(Uri.fromFile(plik), "*//*");
+                            startActivity(intent);*/
                         }
                     }
                 });
