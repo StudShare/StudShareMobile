@@ -89,11 +89,13 @@ public class MainScreenActivity extends AppCompatActivity {
 
                         else
                         {
-                            noteManager.getFileData((int)id);
+                            //NA SZTYWNO !!!!!!!!!!
+                            noteManager.getFileData(10);
 
+                            //temp
+                            String savePath = "/mnt/emmc/dcim/note.pdf";
 
-
-                            String videoUrl = "/storage/sdcard/Download/note.pdf";
+                            String videoUrl = savePath;
                             Intent i = new Intent(Intent.ACTION_VIEW);
                             i.setDataAndType(Uri.parse(videoUrl),"*/*");
                             startActivity(i);

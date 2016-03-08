@@ -28,18 +28,14 @@ public class Sample extends AppCompatActivity {
         mEditor.setEditorHeight(200);
         mEditor.setEditorFontSize(22);
         mEditor.setEditorFontColor(Color.RED);
-        //mEditor.setEditorBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
         mEditor.setPlaceholder("Insert text here...");
-        mEditor.setPlaceholder("zmiana4");
 
         mPreview = (TextView) findViewById(R.id.preview);
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
-                mPreview.setText(text + "zmiana4");
+                mPreview.setText(text );
             }
         });
 
@@ -47,12 +43,7 @@ public class Sample extends AppCompatActivity {
         findViewById(R.id.new_bb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowMessage.Show(getApplicationContext(), "44dd tw.bolek");
 
-                //connectionManager.SendUpdate(" update SiteUser set email='jaja_janusz@interia.pl' where idSiteUser=1");
-                //ShowMessage.Show(getApplicationContext(), "akta wyslane");
-                //connectionManager.SendUpdate(
-                //        "insert into Note(textcontent,title,type,idSiteUser) values ('" + mPreview.getText() + "','ozjasz', " + "'text'," + profileManager.getUserID() + ")");
                 String save_text= (String) mPreview.getText();
                 Save_text.setCont(save_text);
                 Save_text.type_note="text";

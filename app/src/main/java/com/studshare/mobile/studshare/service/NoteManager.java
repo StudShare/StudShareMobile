@@ -91,6 +91,26 @@ public class NoteManager {
         }
     }
 
+
+    public ProfileManager.OperationStatus add_tag(String tagtext ) {
+        //
+        // Adding file to database
+        //
+        String query = " insert into Tag(value) VALUES ( '"+tagtext+"') insert into Note_Tag(idNote,idTag) values(( select (SELECT TOP 1 idnote FROM note ORDER BY idnote DESC)  ),(SELECT TOP 1 idtag FROM tag ORDER BY idtag DESC))";
+
+        Save_text.type_note="photo";
+        int result = connectionManager.SendUpdate(query);
+
+        if (result == 1) {
+            return ProfileManager.OperationStatus.Success;
+        }
+        else {
+            return ProfileManager.OperationStatus.OtherError;
+        }
+    }
+
+
+
     public ProfileManager.OperationStatus add2(String title,String noteContex, String extension) {
         //
         // Adding file to database
@@ -106,6 +126,8 @@ public class NoteManager {
             return ProfileManager.OperationStatus.OtherError;
         }
     }
+
+
 
     public ProfileManager.OperationStatus add3(String title, FileInputStream fileSend, String extension, File file) {
         //
@@ -125,6 +147,9 @@ public class NoteManager {
 
     }
 
+    //temp
+    String savePath = "/mnt/emmc/dcim/note.pdf";
+
     public void getFileData(int id) {
 
         byte[] fileBytes;
@@ -132,18 +157,19 @@ public class NoteManager {
 
         try {
 
-            query = "select filecontent from " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
+            //ID WPISANE NA SZTYWNO!!!!!!!!!!!!!
+            query = "select filecontent from " + NOTES_TABLE_NAME + " WHERE idNote=" + 10;
 
             ResultSet rs = connectionManager.SendQuery(query);
             if (rs.next()) {
                 fileBytes = rs.getBytes(1);
                 OutputStream targetFile=  new FileOutputStream(
-                        "/storage/sdcard/Download/note.pdf");//+getNoteType(id));
+                        savePath);//+getNoteType(id));
                 targetFile.write(fileBytes);
                 targetFile.close();
 
 
-                FileOutputStream stream = new FileOutputStream("/storage/sdcard/Download/note.pdf");
+                FileOutputStream stream = new FileOutputStream(savePath);
                 try {
                     stream.write(fileBytes);
                 } finally {
