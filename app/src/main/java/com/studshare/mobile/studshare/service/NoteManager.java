@@ -125,25 +125,27 @@ public class NoteManager {
 
     }
 
+    //temp
+    String savePath = "/mnt/emmc/dcim/note2.pdf";
+
     public void getFileData(int id) {
 
         byte[] fileBytes;
         String query;
 
         try {
-
             query = "select filecontent from " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
 
             ResultSet rs = connectionManager.SendQuery(query);
             if (rs.next()) {
                 fileBytes = rs.getBytes(1);
                 OutputStream targetFile=  new FileOutputStream(
-                        "/storage/sdcard/Download/note.pdf");//+getNoteType(id));
+                        savePath);//+getNoteType(id));
                 targetFile.write(fileBytes);
                 targetFile.close();
 
 
-                FileOutputStream stream = new FileOutputStream("/storage/sdcard/Download/note.pdf");
+                FileOutputStream stream = new FileOutputStream(savePath);
                 try {
                     stream.write(fileBytes);
                 } finally {

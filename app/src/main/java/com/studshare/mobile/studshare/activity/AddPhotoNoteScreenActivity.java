@@ -36,8 +36,8 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
         txtTitle = (EditText)this.findViewById(R.id.txtTitle);
         txtTags = (EditText)this.findViewById(R.id.txtTags);
 
-
         Bundle extras = getIntent().getExtras();
+
         if (extras != null) {
             ext  = extras.getString("extension");
             pathToFile  = extras.getString("fileToPass");
@@ -67,7 +67,6 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
             FileInputStream fis = null;
             try
             {
-
                 File file = new File(pathToFile);
                 fis = new FileInputStream(file);
             } catch (Exception e2) {

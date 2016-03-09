@@ -30,10 +30,7 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_screen);
-
         loadUserNotes();
-
-
     }
 
     private void loadUserNotes() {
@@ -55,8 +52,11 @@ public class MainScreenActivity extends AppCompatActivity {
 
                     if (rsUserNotes.getString(3).equals("photo")) {
                         imageId[index] = R.drawable.camera;
-                    } else {
+                    } else if (rsUserNotes.getString(3).equals("text")) {
                         imageId[index] = R.drawable.text;
+                    }
+                    else {
+                        imageId[index] = R.drawable.file2;
                     }
 
                     index++;
@@ -89,18 +89,14 @@ public class MainScreenActivity extends AppCompatActivity {
 
                         else
                         {
-                            noteManager.getFileData((int)id);
+                            noteManager.getFileData(notesList.getItem(notesList.getChosenID()));
 
+                            String savePath = "/mnt/emmc/dcim/note2.pdf";
 
-
-                            String videoUrl = "/storage/sdcard/Download/note.pdf";
+                            String videoUrl = savePath;
                             Intent i = new Intent(Intent.ACTION_VIEW);
                             i.setDataAndType(Uri.parse(videoUrl),"*/*");
                             startActivity(i);
-                            /*File plik = new File("note."+noteManager.getNoteType((int)id));
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.setDataAndType(Uri.fromFile(plik), "*//*");
-                            startActivity(intent);*/
                         }
                     }
                 });
