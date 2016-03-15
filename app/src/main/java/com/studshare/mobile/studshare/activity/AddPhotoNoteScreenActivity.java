@@ -61,7 +61,7 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
         Bitmap bitmap = cp.getPhoto();
 
         if (ext.equals("photo"))
-            result = noteManager.add(title, bitmap, ext);
+            result = noteManager.add(title, bitmap, ext, tags);
 
         else if(!ext.equals("pdf")){
             FileInputStream fis = null;

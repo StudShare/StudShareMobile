@@ -5,6 +5,9 @@ import android.util.Base64;
 
 import com.studshare.mobile.studshare.activity.Save_text;
 import com.studshare.mobile.studshare.other.CameraPhoto;
+import com.studshare.mobile.studshare.other.ShowMessage;
+
+import java.io.Console;
 import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -24,7 +27,7 @@ public class NoteManager {
     private final String NOTES_TABLE_NAME = "Note";
     ConnectionManager connectionManager = new ConnectionManager();
     ProfileManager profileManager = new ProfileManager();
-
+    TagManager tagManager = new TagManager();
 
     private String bitmapToBase64(Bitmap bitmap) {
         try {
@@ -75,13 +78,28 @@ public class NoteManager {
         }
     }
 
-    public ProfileManager.OperationStatus add(String title, Bitmap photo, String extension) {
+    public ProfileManager.OperationStatus add(String title, Bitmap photo, String extension, String tags) {
         //
         // Adding photo to database
         //
         String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(photo) + "', '" + extension + "')";
 
         int result = connectionManager.SendUpdate(query);
+
+        // TEMPORARY
+        ResultSet noteIdrs = connectionManager.SendQuery("SELECT TOP 1 idNote FROM Note ORDER BY idNote DESC");
+
+        try {
+            if (noteIdrs.next()) {
+                int tagId = tagManager.getIDByTagName(tags);
+                int temp_res = tagManager.addNoteTag(noteIdrs.getInt(1), tagId);
+            }
+        }
+        catch (SQLException sqle) {
+            return ProfileManager.OperationStatus.OtherError;
+        }
+
+
 
         if (result == 1) {
             return ProfileManager.OperationStatus.Success;
