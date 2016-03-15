@@ -28,8 +28,9 @@ public class EditPhotoNoteScreenActivity extends AppCompatActivity {
         txtTitle = (EditText)this.findViewById(R.id.txtTitle);
         txtTags = (EditText)this.findViewById(R.id.txtTags);
 
-        //wczytac tytul i tagi
+        // Loading title and tags
         txtTitle.setText(noteManager.getNoteTitle(notesList.getItem(notesList.getChosenID())));
+        txtTags.setText(noteManager.getTagsByID(notesList.getItem(notesList.getChosenID())));
     }
 
     public void trySave(View view) {

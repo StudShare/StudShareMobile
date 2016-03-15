@@ -25,6 +25,8 @@ import java.io.OutputStreamWriter;
 public class NoteManager {
 
     private final String NOTES_TABLE_NAME = "Note";
+    private final String NOTE_TAG_TABLE_NAME = "Note_Tag";
+    private final String TAG_TABLE_NAME = "Tag";
     ConnectionManager connectionManager = new ConnectionManager();
     ProfileManager profileManager = new ProfileManager();
     TagManager tagManager = new TagManager();
@@ -91,14 +93,17 @@ public class NoteManager {
 
         try {
             if (noteIdrs.next()) {
-                int tagId = tagManager.getIDByTagName(tags);
-                int temp_res = tagManager.addNoteTag(noteIdrs.getInt(1), tagId);
+                String[] tagList = tags.split("\\s+");
+
+                for (int i = 0; i < tagList.length; i++) {
+                    int tagId = tagManager.getIDByTagName(tagList[i]);
+                    int temp_res = tagManager.addNoteTag(noteIdrs.getInt(1), tagId);
+                }
             }
         }
         catch (SQLException sqle) {
             return ProfileManager.OperationStatus.OtherError;
         }
-
 
 
         if (result == 1) {
@@ -270,6 +275,34 @@ public class NoteManager {
         }
         else {
             return false;
+        }
+    }
+
+    public String getTagsByID(int id)
+    {
+        String query = "SELECT idTag FROM " + NOTE_TAG_TABLE_NAME + " WHERE idNote = " + id;
+
+        ResultSet rs = connectionManager.SendQuery(query);
+
+        try {
+            String result = "";
+
+            while (rs.next()) {
+                int TagID = rs.getInt(1);
+
+                String getTagNameQuery = "SELECT value FROM " + TAG_TABLE_NAME + " WHERE idTag = " + TagID;
+
+                ResultSet rsTag = connectionManager.SendQuery(getTagNameQuery);
+
+                while (rsTag.next()) {
+                    result += rsTag.getString(1) + " ";
+                }
+            }
+
+            return result;
+        }
+        catch (SQLException sqle) {
+            return "SQL Error";
         }
     }
 }
