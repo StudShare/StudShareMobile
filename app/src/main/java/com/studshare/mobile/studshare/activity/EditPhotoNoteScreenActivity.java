@@ -44,6 +44,7 @@ public class EditPhotoNoteScreenActivity extends AppCompatActivity {
         }
 
         boolean result = noteManager.updateTitle(notesList.getItem(notesList.getChosenID()), title);
+        noteManager.updateTags(notesList.getItem(notesList.getChosenID()), tags);
 
         if (result)
         {

@@ -253,6 +253,10 @@ public class NoteManager {
     }
 
     public boolean delete(int id) {
+
+        // At first, removing all occurrences of this note in Note_Tag table.
+        int tagClearResult = deleteTags(id);
+
         String query = "DELETE FROM " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
 
         int result = connectionManager.SendUpdate(query);
@@ -265,6 +269,12 @@ public class NoteManager {
         }
     }
 
+    private int deleteTags(int idNote) {
+        String tagsClearQuery = "DELETE FROM " + NOTE_TAG_TABLE_NAME + " WHERE idNote = " + idNote;
+
+        return connectionManager.SendUpdate(tagsClearQuery);
+    }
+
     public boolean updateTitle(int id, String newTitle) {
         String query = "UPDATE " + NOTES_TABLE_NAME + " SET title='" + newTitle + "' WHERE idNote=" + id;
 
@@ -275,6 +285,19 @@ public class NoteManager {
         }
         else {
             return false;
+        }
+    }
+
+    public void updateTags(int id, String tags) {
+        // At first, removing all occurrences of this note in Note_Tag table.
+        int tagClearResult = deleteTags(id);
+
+        // Adding new tags
+        String[] tagList = tags.split("\\s+");
+
+        for (int i = 0; i < tagList.length; i++) {
+            int tagId = tagManager.getIDByTagName(tagList[i]);
+            int temp_res = tagManager.addNoteTag(id, tagId);
         }
     }
 
