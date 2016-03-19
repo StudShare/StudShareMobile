@@ -78,6 +78,28 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/s5"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/primaryBlue"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/butRate"
+                    android:padding="10dp"
+                    android:background="@null"
+                    android:src="@drawable/rate"
+                    android:minWidth="10dp"
+                    android:onClick="doDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

@@ -47,6 +47,44 @@ public class NoteManager {
         }
     }
 
+    public ResultSet getNotesByQuery(String tagsToFind) {
+        //
+        // Getting notes which tags contain tagsToFind string.
+        //
+
+        String[] tagList = tagsToFind.split("\\s+");
+        String query = "SELECT DISTINCT n.idNote, n.title, n.type FROM " + NOTES_TABLE_NAME + " n LEFT JOIN "
+                + NOTE_TAG_TABLE_NAME + " nt ON n.idNote = nt.idNote LEFT JOIN " + TAG_TABLE_NAME + " t ON nt.idTag = t.idTag WHERE ";
+
+        for (int i = 0; i < tagList.length; i++) {
+            if (i == 0) {
+                query += "t.value LIKE '%" + tagList[i] + "%'";
+            }
+            else {
+                query += " OR t.value LIKE '%" + tagList[i] + "%'";
+            }
+        }
+
+        return connectionManager.SendQuery(query);
+    }
+
+    public int getNumberOfNotesByQuery(String query) {
+        ResultSet rsNotes = getNotesByQuery(query);
+
+        try {
+            int numberOfNotes = 0;
+
+            while (rsNotes.next()) {
+                numberOfNotes++;
+            }
+
+            return numberOfNotes;
+
+        } catch (SQLException sqle) {
+            return -1;
+        }
+    }
+
     public ResultSet getAllUserNotes() {
         //
         // Getting all user's notes without their content (used for listing)
@@ -327,5 +365,26 @@ public class NoteManager {
         catch (SQLException sqle) {
             return "SQL Error";
         }
+    }
+
+    public Boolean userHasNote(int idNote, int userID) {
+        //
+        //  Used in note preview activity. If this note belong to user then display edit and delete button. Otherwise display rate button.
+        //
+
+        String query = "SELECT * FROM " + NOTES_TABLE_NAME + " WHERE idNote = " + idNote + " AND idSiteUser = " + userID;
+
+        ResultSet rs = connectionManager.SendQuery(query);
+
+        try {
+            while (rs.next()) {
+                return Boolean.TRUE;
+            }
+        }
+        catch (SQLException sqle) {
+            return Boolean.FALSE;
+        }
+
+        return Boolean.FALSE;
     }
 }

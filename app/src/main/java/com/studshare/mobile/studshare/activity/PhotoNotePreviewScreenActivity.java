@@ -10,11 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.studshare.mobile.studshare.R;
 import com.studshare.mobile.studshare.other.NotesList;
 import com.studshare.mobile.studshare.other.ShowMessage;
 import com.studshare.mobile.studshare.service.NoteManager;
+import com.studshare.mobile.studshare.service.ProfileManager;
 
 
 public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
@@ -22,6 +24,7 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
     private ImageView imageView;
     private NotesList notesList = new NotesList();
     NoteManager noteManager = new NoteManager();
+    ProfileManager profileManager = new ProfileManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,25 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.photoPreview);
 
         loadPhoto(notesList.getChosenID());
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Boolean showToolbar = extras.getBoolean("SHOW_TOOLBAR");
+
+            if (!showToolbar) {
+                Boolean noteBelongToUser = noteManager.userHasNote(notesList.getItem(notesList.getChosenID()), profileManager.getUserID());
+
+                if (!noteBelongToUser) {
+                    LinearLayout rate = (LinearLayout)findViewById(R.id.s5);
+                    LinearLayout delete = (LinearLayout)findViewById(R.id.s4);
+                    LinearLayout edit = (LinearLayout)findViewById(R.id.s3);
+
+                    rate.setVisibility(View.VISIBLE);
+                    delete.setVisibility(View.GONE);
+                    edit.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 
     private void loadPhoto(int index) {

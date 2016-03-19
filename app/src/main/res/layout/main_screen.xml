@@ -47,7 +47,8 @@
                     android:src="@drawable/search"
                     android:minWidth="10dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:onClick="loadNotesByQuery" />
 
             </LinearLayout>
 
@@ -143,7 +144,8 @@
                     android:src="@drawable/browse"
                     android:minWidth="10dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:onClick="loadUserNotes"/>
 
             </LinearLayout>
 
