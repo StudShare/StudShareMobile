@@ -213,11 +213,35 @@ public class NoteManager {
                     stream.close();
                 }
 
-                Log.d("AAAAA", "done");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+
+            savePath = "/storage/sdcard/Download/note.pdf";
+            try {
+                query = "SELECT filecontent FROM " + NOTES_TABLE_NAME + " WHERE idNote=" + id;
+
+                ResultSet rs = connectionManager.SendQuery(query);
+
+                if (rs.next()) {
+                    fileBytes = rs.getBytes(1);
+                    OutputStream targetFile=  new FileOutputStream(savePath);
+                    targetFile.write(fileBytes);
+                    targetFile.close();
+
+
+                    FileOutputStream stream = new FileOutputStream(savePath);
+                    try {
+                        stream.write(fileBytes);
+                    } finally {
+                        stream.close();
+                    }
+                }
+
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
     }
 

@@ -69,6 +69,10 @@
             android:name=".activity.Sample"
             android:label="@string/title_activity_samp2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.ChooseFileActionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

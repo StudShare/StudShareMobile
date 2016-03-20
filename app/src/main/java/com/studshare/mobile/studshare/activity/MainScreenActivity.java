@@ -43,6 +43,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
         String tags = txtSearch.getText().toString();
 
+        if (tags.equals(""))
+            return;
+
         int numberOfNotes = noteManager.getNumberOfNotesByQuery(tags);
 
         if (numberOfNotes > 0) {
@@ -178,12 +181,15 @@ public class MainScreenActivity extends AppCompatActivity {
                         {
                             noteManager.getFileData(notesList.getItem(notesList.getChosenID()));
 
-                            String savePath = "/mnt/emmc/dcim/note2.pdf";
+                            Intent goToNextActivity = new Intent(getApplicationContext(), ChooseFileActionActivity.class);
+                            startActivity(goToNextActivity);
+
+                            /*String savePath = "/mnt/emmc/dcim/note2.pdf";
 
                             String videoUrl = savePath;
                             Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setDataAndType(Uri.parse(videoUrl),"*/*");
-                            startActivity(i);
+                            i.setDataAndType(Uri.parse(videoUrl),"*");
+                            startActivity(i);*/
                         }
                     }
                 });
