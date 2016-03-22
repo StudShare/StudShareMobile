@@ -119,15 +119,9 @@ public class NoteManager {
         }
     }
 
-    public ProfileManager.OperationStatus add(String title, Bitmap photo, String extension, String tags) {
-        //
-        // Adding photo to database
-        //
-        String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(photo) + "', '" + extension + "')";
+    private int addTags(String tags) {
 
-        int result = connectionManager.SendUpdate(query);
-
-        // TEMPORARY
+        // Tags adding algorithm
         ResultSet noteIdrs = connectionManager.SendQuery("SELECT TOP 1 idNote FROM Note ORDER BY idNote DESC");
 
         try {
@@ -141,9 +135,21 @@ public class NoteManager {
             }
         }
         catch (SQLException sqle) {
-            return ProfileManager.OperationStatus.OtherError;
+            return -1;
         }
 
+        return 1;
+    }
+
+    public ProfileManager.OperationStatus add(String title, Bitmap photo, String extension, String tags) {
+        //
+        // Adding photo to database
+        //
+        String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + bitmapToBase64(photo) + "', '" + extension + "')";
+
+        int result = connectionManager.SendUpdate(query);
+
+        int tagsAddingResult = addTags(tags);
 
         if (result == 1) {
             return ProfileManager.OperationStatus.Success;
@@ -153,7 +159,7 @@ public class NoteManager {
         }
     }
 
-    public ProfileManager.OperationStatus add2(String title,String noteContex, String extension) {
+    public ProfileManager.OperationStatus add2(String title,String noteContex, String extension, String tags) {
         //
         // Adding file to database
         //
@@ -161,6 +167,8 @@ public class NoteManager {
         Save_text.type_note="photo";
         int result = connectionManager.SendUpdate(query);
 
+        int tagsAddingResult = addTags(tags);
+
         if (result == 1) {
             return ProfileManager.OperationStatus.Success;
         }
@@ -169,15 +177,16 @@ public class NoteManager {
         }
     }
 
-    public ProfileManager.OperationStatus add3(String title, FileInputStream fileSend, String extension, File file) {
+    public ProfileManager.OperationStatus add3(String title, FileInputStream fileSend, String extension, File file, String tags) {
         //
         // Adding file to database
         //
         String query = "INSERT INTO " + NOTES_TABLE_NAME + "(idSiteUser, title, textContent, pictureContent, type) VALUES (" + profileManager.getUserID() + ", '" + title + "', '', '" + fileSend + "', '" + extension + "')";
 
+        int result = connectionManager.SendUpdate2(file, profileManager.getUserID(), title, extension);
 
+        int tagsAddingResult = addTags(tags);
 
-        int result = connectionManager.SendUpdate2(file, profileManager.getUserID(), title,extension);
         if (result == 1) {
             return ProfileManager.OperationStatus.Success;
         }

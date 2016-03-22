@@ -73,7 +73,7 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
                 e2.printStackTrace();
             }
             String textt= Save_text.getCont();
-            result = noteManager.add2(title, textt, ext);
+            result = noteManager.add2(title, textt, ext, txtTags.getText().toString());
 
         }
         else {
@@ -92,7 +92,7 @@ public class AddPhotoNoteScreenActivity extends AppCompatActivity {
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
-            result = noteManager.add3(title, fis, ext, file);
+            result = noteManager.add3(title, fis, ext, file, txtTags.getText().toString());
 
         }
 
