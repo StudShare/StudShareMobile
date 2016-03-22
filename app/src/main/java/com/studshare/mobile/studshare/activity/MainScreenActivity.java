@@ -130,12 +130,11 @@ public class MainScreenActivity extends AppCompatActivity {
                         {
                             noteManager.getFileData(notesList.getItem(notesList.getChosenID()));
 
-                            String savePath = "/mnt/emmc/dcim/note2.pdf";
+                            Intent goToNextActivity = new Intent(getApplicationContext(), ChooseFileActionActivity.class);
+                            goToNextActivity.putExtra("USERS_NOTE", noteManager.userHasNote(notesList.getItem(notesList.getChosenID()), profileManager.getUserID()));
+                            goToNextActivity.putExtra("LIST_FILTER", txtSearch.getText().toString());
+                            startActivity(goToNextActivity);
 
-                            String videoUrl = savePath;
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setDataAndType(Uri.parse(videoUrl),"*");
-                            startActivity(i);
                         }
                     }
                 });
@@ -208,14 +207,9 @@ public class MainScreenActivity extends AppCompatActivity {
                             noteManager.getFileData(notesList.getItem(notesList.getChosenID()));
 
                             Intent goToNextActivity = new Intent(getApplicationContext(), ChooseFileActionActivity.class);
+                            goToNextActivity.putExtra("USERS_NOTE", noteManager.userHasNote(notesList.getItem(notesList.getChosenID()), profileManager.getUserID()));
+                            goToNextActivity.putExtra("LIST_FILTER", txtSearch.getText().toString());
                             startActivity(goToNextActivity);
-
-                            /*String savePath = "/mnt/emmc/dcim/note2.pdf";
-
-                            String videoUrl = savePath;
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setDataAndType(Uri.parse(videoUrl),"*");
-                            startActivity(i);*/
                         }
                     }
                 });
