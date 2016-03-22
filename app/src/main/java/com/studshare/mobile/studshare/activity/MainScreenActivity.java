@@ -26,7 +26,6 @@ public class MainScreenActivity extends AppCompatActivity {
     NotesList notesList = new NotesList();
     EditText txtSearch;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +35,20 @@ public class MainScreenActivity extends AppCompatActivity {
         txtSearch = (EditText)this.findViewById(R.id.txtSearch);
 
         loadUserNotes(null);
+    }
+
+    private void addNoteToList(int idNote, int index, String[] names, String title) {
+
+        String rating = "";
+        double noteRating = noteManager.getNoteRating(idNote);
+
+        if (noteRating < 0)
+            rating = "brak ocen";
+        else
+            rating = String.valueOf(noteRating);
+
+        notesList.add(index, idNote);
+        names[index] = title + "   (" + rating + ")";    //Get note title
     }
 
     public void loadNotesByQuery(View view) {
@@ -59,8 +72,10 @@ public class MainScreenActivity extends AppCompatActivity {
 
             try {
                 while (rsFoundNotes.next()) {
-                    notesList.add(index, rsFoundNotes.getInt(1));
-                    names[index] = rsFoundNotes.getString(2);    //Get note title
+                    //notesList.add(index, rsFoundNotes.getInt(1));
+                    //names[index] = rsFoundNotes.getString(2);    //Get note title
+
+                    addNoteToList(rsFoundNotes.getInt(1), index, names, rsFoundNotes.getString(2));
 
                     if (rsFoundNotes.getString(3).equals("photo")) {
                         imageId[index] = R.drawable.camera;
@@ -137,8 +152,8 @@ public class MainScreenActivity extends AppCompatActivity {
 
             try {
                 while (rsUserNotes.next()) {
-                    notesList.add(index, rsUserNotes.getInt(1));
-                    names[index] = rsUserNotes.getString(2);    //Get note title
+
+                    addNoteToList(rsUserNotes.getInt(1), index, names, rsUserNotes.getString(2));
 
                     if (rsUserNotes.getString(3).equals("photo")) {
                         imageId[index] = R.drawable.camera;

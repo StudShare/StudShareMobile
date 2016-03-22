@@ -107,4 +107,10 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
         startActivity(goToNextActivity);
     }
 
+    public void doRate(View view) {
+        Intent goToNextActivity = new Intent(getApplicationContext(), RateScreenActivity.class);
+        goToNextActivity.putExtra("IDNOTE", notesList.getItem(notesList.getChosenID()));
+        startActivity(goToNextActivity);
+    }
+
 }

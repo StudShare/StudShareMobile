@@ -27,6 +27,7 @@ public class NoteManager {
     private final String NOTES_TABLE_NAME = "Note";
     private final String NOTE_TAG_TABLE_NAME = "Note_Tag";
     private final String TAG_TABLE_NAME = "Tag";
+    private final String RATE_TABLE = "Rate";
     ConnectionManager connectionManager = new ConnectionManager();
     ProfileManager profileManager = new ProfileManager();
     TagManager tagManager = new TagManager();
@@ -410,5 +411,35 @@ public class NoteManager {
         }
 
         return Boolean.FALSE;
+    }
+
+    public double getNoteRating(int idNote) {
+
+        String query = "SELECT AVG(value) FROM " + RATE_TABLE + " WHERE idNote = " + idNote;
+
+        ResultSet rs = connectionManager.SendQuery(query);
+
+        try {
+            while (rs.next()) {
+                double result = rs.getDouble(1);
+
+                if (result != 0)
+                    return result;
+                else
+                    return -1;
+            }
+        }
+        catch (SQLException sqle) {
+            return -2;
+        }
+
+        return -1;
+    }
+
+    public int saveNoteRating(int idNote, int rating) {
+
+        String query = "INSERT INTO " + RATE_TABLE + "(value, idNote) VALUES(" + rating + ", " + idNote + ")";
+
+        return connectionManager.SendUpdate(query);
     }
 }

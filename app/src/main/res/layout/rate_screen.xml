@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondaryBlue">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+
+        <LinearLayout
+            android:id="@+id/navbar"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primaryBlue">
+
+            <ImageButton
+                android:id="@+id/butBack"
+                android:padding="10dp"
+                android:background="@null"
+                android:src="@drawable/backarrow"
+                android:minWidth="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="goToMainScreen" />
+
+            <TextView
+                android:id="@+id/txtProfileSettingsInfo"
+                android:layout_gravity="center"
+                android:text="Oceń"
+                android:layout_marginLeft="24dp"
+                style="@style/SectionHeader" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_weight="0.7">
+
+        <LinearLayout
+            android:id="@+id/ratings"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="25px"
+            >
+
+            <ImageButton
+                android:id="@+id/butStar1"
+                android:padding="10dp"
+                android:background="@null"
+                android:src="@drawable/full_star"
+                android:minWidth="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="starTapped" />
+
+            <ImageButton
+                android:id="@+id/butStar2"
+                android:padding="10dp"
+                android:background="@null"
+                android:src="@drawable/empty_star"
+                android:minWidth="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="starTapped" />
+
+            <ImageButton
+                android:id="@+id/butStar3"
+                android:padding="10dp"
+                android:background="@null"
+                android:src="@drawable/empty_star"
+                android:minWidth="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="starTapped" />
+
+            <ImageButton
+                android:id="@+id/butStar4"
+                android:padding="10dp"
+                android:background="@null"
+                android:src="@drawable/empty_star"
+                android:minWidth="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="starTapped" />
+
+            <ImageButton
+                android:id="@+id/butStar5"
+                android:padding="10dp"
+                android:background="@null"
+                android:src="@drawable/empty_star"
+                android:minWidth="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="starTapped" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/butSave"
+            android:onClick="doRate"
+            android:text="ZAPISZ"
+            style="@style/NonImageButton"
+            android:layout_margin="25px"/>
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

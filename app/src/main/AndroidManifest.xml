@@ -72,6 +72,9 @@
         <activity
             android:name=".activity.ChooseFileActionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RateScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 
