@@ -19,6 +19,7 @@ public class RateScreenActivity extends AppCompatActivity {
     int idNote = -1;
     Button butSave;
     ImageButton[] stars = new ImageButton[6];
+    String listFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class RateScreenActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             idNote = extras.getInt("IDNOTE");
+            listFilter = extras.getString("LIST_FILTER");
         }
     }
 
@@ -77,6 +79,7 @@ public class RateScreenActivity extends AppCompatActivity {
         }
 
         Intent goToNextActivity = new Intent(getApplicationContext(), MainScreenActivity.class);
+        goToNextActivity.putExtra("LIST_FILTER", listFilter);
         startActivity(goToNextActivity);
     }
 

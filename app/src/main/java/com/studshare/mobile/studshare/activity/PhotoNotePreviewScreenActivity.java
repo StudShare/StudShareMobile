@@ -26,6 +26,8 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
     NoteManager noteManager = new NoteManager();
     ProfileManager profileManager = new ProfileManager();
 
+    String listFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            listFilter = extras.getString("LIST_FILTER");
             Boolean showToolbar = extras.getBoolean("SHOW_TOOLBAR");
 
             if (!showToolbar) {
@@ -110,6 +113,7 @@ public class PhotoNotePreviewScreenActivity extends AppCompatActivity {
     public void doRate(View view) {
         Intent goToNextActivity = new Intent(getApplicationContext(), RateScreenActivity.class);
         goToNextActivity.putExtra("IDNOTE", notesList.getItem(notesList.getChosenID()));
+        goToNextActivity.putExtra("LIST_FILTER", listFilter);
         startActivity(goToNextActivity);
     }
 

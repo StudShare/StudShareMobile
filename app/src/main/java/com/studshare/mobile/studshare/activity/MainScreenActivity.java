@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.net.Uri;
 import java.io.File;
@@ -25,6 +26,7 @@ public class MainScreenActivity extends AppCompatActivity {
     NoteManager noteManager = new NoteManager();
     NotesList notesList = new NotesList();
     EditText txtSearch;
+    ImageButton butSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,18 @@ public class MainScreenActivity extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         txtSearch = (EditText)this.findViewById(R.id.txtSearch);
+        butSearch = (ImageButton)this.findViewById(R.id.butSearch);
 
-        loadUserNotes(null);
+        Bundle extras = getIntent().getExtras();
+
+        // Specify which data we populate the list
+        if (extras != null) {
+            txtSearch.setText(extras.getString("LIST_FILTER"));
+            loadNotesByQuery(null);
+        }
+        else {
+            loadUserNotes(null);
+        }
     }
 
     private void addNoteToList(int idNote, int index, String[] names, String title) {
@@ -72,8 +84,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
             try {
                 while (rsFoundNotes.next()) {
-                    //notesList.add(index, rsFoundNotes.getInt(1));
-                    //names[index] = rsFoundNotes.getString(2);    //Get note title
 
                     addNoteToList(rsFoundNotes.getInt(1), index, names, rsFoundNotes.getString(2));
 
@@ -105,6 +115,7 @@ public class MainScreenActivity extends AppCompatActivity {
                         {
                             Intent goToNextActivity = new Intent(getApplicationContext(), PhotoNotePreviewScreenActivity.class);
                             goToNextActivity.putExtra("SHOW_TOOLBAR", Boolean.FALSE);
+                            goToNextActivity.putExtra("LIST_FILTER", txtSearch.getText().toString());
                             startActivity(goToNextActivity);
                         }
 
